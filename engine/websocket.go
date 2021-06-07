@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gorilla/websocket"
-	"log"
 	"net/url"
 	"regexp"
 	"strings"
@@ -12,15 +11,27 @@ import (
 
 const WebSocketContext = "/codenjoy-contest/ws"
 
-func CreateWebSocketConnection(browserUrl string) (*websocket.Conn, error) {
+func CreateWebSocketConnection(browserUrl string) (Communication, *Envelope, error) {
 	u, err := createWebUrl(browserUrl)
 	if err != nil {
-		return &websocket.Conn{}, err
+		return Communication{}, &Envelope{}, err
 	}
 
-	log.Printf("Trying to esteblish connection with %s", u.String())
-	conn, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
-	return conn, err
+	connection, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
+	if err != nil {
+		return Communication{}, &Envelope{}, err
+	}
+
+	communication := Communication{
+		Done:  make(chan struct{}),
+		Read:  make(chan struct{}),
+		Write: make(chan struct{}),
+	}
+	envelope := &Envelope{}
+
+	go ReadWriteSocketLoop(connection, communication, envelope)
+
+	return communication, envelope, nil
 }
 
 func createWebUrl(browserUrl string) (url.URL, error) {
