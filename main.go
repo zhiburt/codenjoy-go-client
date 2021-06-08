@@ -1,38 +1,58 @@
 package main
 
 import (
-    "fmt"
-    "github.com/codenjoyme/codenjoy-go-client/engine"
-    "github.com/codenjoyme/codenjoy-go-client/games/bomberman"
-    "log"
+	"github.com/codenjoyme/codenjoy-go-client/engine"
+	"github.com/codenjoyme/codenjoy-go-client/games/bomberman"
+	"log"
+	"os"
 )
 
+const URL = "http://localhost:8080/codenjoy-contest/board/player/0?code=000000000000"
+const GAME = "bomberman"
+
+type Solver interface {
+	Get(rawBoard []rune) string
+}
+
 func main() {
-    // *** paste here board page url from a browser after registration ***
-    browserUrl := "http://localhost:8080/codenjoy-contest/board/player/0?code=000000000000"
-    communication, envelope, err := engine.CreateWebSocketConnection(browserUrl)
-    if err != nil {
-        log.Fatal(err)
-        return
-    }
+	communication, envelope, err := engine.CreateWebSocketConnection(loadBrowserUrl())
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
 
-    board := &bomberman.Board{AbstractBoard: &engine.AbstractBoard{}}
-    solver := &bomberman.Solver{}
+	solver := loadGameSolver()
+	for {
+		select {
+		case <-communication.Done:
+			log.Fatal("It's done")
+			return
+		case <-communication.Read:
+			envelope.Output = solver.Get(envelope.Input)
+			communication.Write <- struct{}{}
+		}
+	}
+}
 
-    for {
-        select {
-        case <-communication.Done:
-            log.Fatal("It's done")
-            return
-        case <-communication.Read:
-            board.UpdateBoard(envelope.Input)
-            fmt.Printf("\nBoard:\n%s\n", board.BoardAsString())
+func loadBrowserUrl() string {
+	url := URL
+	// os.Args[0] the name of command itself; os.Args[1] game; os.Args[2] url
+	if len(os.Args) == 3 {
+		url = os.Args[2]
+	}
+	return url
+}
 
-            envelope.Output = string(solver.Get(board))
-            fmt.Println("Answer: " + envelope.Output)
-            fmt.Println("-------------------------------------------------------------")
+func loadGameSolver() Solver {
+	game := GAME
+	// os.Args[0] the name of command itself; os.Args[1] game; os.Args[2] url
+	if len(os.Args) == 3 {
+		game = os.Args[1]
+	}
 
-            communication.Write <- struct{}{}
-        }
-    }
+	switch game {
+	case "bomberman":
+		return &bomberman.Solver{B: &bomberman.Board{AbstractBoard: &engine.AbstractBoard{}}}
+	}
+	panic("unable to determine game type")
 }
