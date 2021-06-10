@@ -2,6 +2,7 @@ package bomberman
 
 import (
     "github.com/codenjoyme/codenjoy-go-client/engine"
+    "github.com/codenjoyme/codenjoy-go-client/games/bomberman"
     "github.com/stretchr/testify/assert"
     "testing"
 )
@@ -14,16 +15,16 @@ func Test_GetFutureBlasts(t *testing.T) {
 
     tests := []tstruct{
         {
-            board: ".☼☼.." +
-                ".3☼.." +
-                ".☼..." +
-                "..&2&" +
-                "1♥...",
+            board:  ".☼☼.." +
+                    ".3☼.." +
+                    ".☼..." +
+                    "..&2&" +
+                    "1♥...",
             expectedOutput: []engine.Point{{0, 3}, {3, 2}, {3, 3}, {3, 4}, {3, 0}, {0, 1}, {0, 2}},
         },
     }
 
-    b := Board{&engine.AbstractBoard{}}
+    b := bomberman.Board{AbstractBoard: &engine.AbstractBoard{}}
     for _, tt := range tests {
         t.Run("get future blasts", func(t *testing.T) {
             b.UpdateBoard([]rune(tt.board))

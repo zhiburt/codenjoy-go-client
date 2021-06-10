@@ -1,6 +1,7 @@
-package engine
+package tests
 
 import (
+    "github.com/codenjoyme/codenjoy-go-client/engine"
     "github.com/stretchr/testify/assert"
     "testing"
 )
@@ -9,34 +10,34 @@ func Test_IndexToPoint(t *testing.T) {
     type tstruct struct {
         board          string
         index          int
-        expectedOutput Point
+        expectedOutput engine.Point
     }
 
     tests := []tstruct{
         {
-            board: ".☺." +
-                "☺.." +
-                "..☺",
+            board:  ".☺." +
+                    "☺.." +
+                    "..☺",
             index:          1,
-            expectedOutput: Point{1, 2},
+            expectedOutput: engine.Point{X: 1, Y: 2},
         },
         {
-            board: ".☺." +
-                "☺.." +
-                "..☺",
+            board:  ".☺." +
+                    "☺.." +
+                    "..☺",
             index:          3,
-            expectedOutput: Point{0, 1},
+            expectedOutput: engine.Point{X: 0, Y: 1},
         },
         {
-            board: ".☺." +
-                "☺.." +
-                "..☺",
+            board:  ".☺." +
+                    "☺.." +
+                    "..☺",
             index:          8,
-            expectedOutput: Point{2, 0},
+            expectedOutput: engine.Point{X: 2, Y: 0},
         },
     }
 
-    b := AbstractBoard{}
+    b := engine.AbstractBoard{}
     for _, tt := range tests {
         t.Run("convert index to point", func(t *testing.T) {
             b.UpdateBoard([]rune(tt.board))
@@ -49,35 +50,35 @@ func Test_IndexToPoint(t *testing.T) {
 func Test_PointToIndex(t *testing.T) {
     type tstruct struct {
         board          string
-        point          Point
+        point          engine.Point
         expectedOutput int
     }
 
     tests := []tstruct{
         {
-            board: "☺.." +
-                "..☺" +
-                ".☺.",
-            point:          Point{0, 2},
+            board:  "☺.." +
+                    "..☺" +
+                    ".☺.",
+            point:          engine.Point{X: 0, Y: 2},
             expectedOutput: 0,
         },
         {
-            board: "☺.." +
-                "..☺" +
-                ".☺.",
-            point:          Point{2, 1},
+            board:  "☺.." +
+                    "..☺" +
+                    ".☺.",
+            point:          engine.Point{X: 2, Y: 1},
             expectedOutput: 5,
         },
         {
-            board: "☺.." +
-                "..☺" +
-                ".☺.",
-            point:          Point{1, 0},
+            board:  "☺.." +
+                    "..☺" +
+                    ".☺.",
+            point:          engine.Point{X: 1, Y: 0},
             expectedOutput: 7,
         },
     }
 
-    b := AbstractBoard{}
+    b := engine.AbstractBoard{}
     for _, tt := range tests {
         t.Run("convert point to index", func(t *testing.T) {
             b.UpdateBoard([]rune(tt.board))
