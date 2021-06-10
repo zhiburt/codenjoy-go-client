@@ -1,7 +1,8 @@
-package engine
+package tests
 
 import (
     "errors"
+    "github.com/codenjoyme/codenjoy-go-client/engine"
     "github.com/stretchr/testify/assert"
     "net/url"
     "testing"
@@ -22,7 +23,7 @@ func Test_createWebUrl(t *testing.T) {
             expectedWebUrl: url.URL{
                 Scheme:   "ws",
                 Host:     "127.0.0.1:8080",
-                Path:     WebSocketContext,
+                Path:     engine.WebSocketContext,
                 RawQuery: "user=793wdxskw521spo4mn1y&code=531459153668826800",
             },
             expectedError: nil,
@@ -33,7 +34,7 @@ func Test_createWebUrl(t *testing.T) {
             expectedWebUrl: url.URL{
                 Scheme:   "wss",
                 Host:     "dojorena.io",
-                Path:     WebSocketContext,
+                Path:     engine.WebSocketContext,
                 RawQuery: "user=793wdxskw521spo4mn1y&code=531459153668826800",
             },
             expectedError: nil,
@@ -66,7 +67,7 @@ func Test_createWebUrl(t *testing.T) {
 
     for _, tt := range tests {
         t.Run(tt.title, func(t *testing.T) {
-            webUrl, err := createWebUrl(tt.input)
+            webUrl, err := engine.CreateWebUrl(tt.input)
             assert.Equal(t, tt.expectedWebUrl, webUrl)
             assert.Equal(t, tt.expectedError, err)
         })
