@@ -5,7 +5,7 @@ if "%GO_CLIENT_HOME%"=="" (
 echo off
 echo [44;93m
 echo        +-------------------------------------------------------------------------+
-echo        !              Now we are starting javascript tests...                    !
+echo        !              Now we are starting go tests...                            !
 echo        +-------------------------------------------------------------------------+
 echo [0m
 echo on
@@ -13,7 +13,7 @@ echo on
 chcp %CODE_PAGE%
 cls
 
-call %GO% go test ./...
+call %GO% test ./tests
 
 call :ask
 
