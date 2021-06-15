@@ -1,4 +1,4 @@
-package bomberman
+package mollymage
 
 import (
     "github.com/codenjoyme/codenjoy-go-client/engine"
@@ -11,7 +11,7 @@ type Board struct {
 }
 
 func (b *Board) GetHero() []engine.Point {
-    return b.FindAllOf([]engine.Element{HERO, BOMB_HERO})
+    return b.FindAllOf([]engine.Element{HERO, POTION_HERO})
 }
 
 func (b *Board) GetOtherHeroes() []engine.Point {
@@ -25,33 +25,33 @@ func (b *Board) IsMyHeroDead() bool {
 
 func (b *Board) IsBarrierAt(point engine.Point) bool {
     return b.IsAtAny(point, []engine.Element{
-        HERO, BOMB_HERO, OTHER_HERO, OTHER_BOMB_HERO,
-        BOMB_TIMER_5, BOMB_TIMER_4, BOMB_TIMER_3, BOMB_TIMER_2, BOMB_TIMER_1,
-        WALL, DESTROYABLE_WALL, MEAT_CHOPPER,
+        HERO, POTION_HERO, OTHER_HERO, OTHER_POTION_HERO,
+        POTION_TIMER_5, POTION_TIMER_4, POTION_TIMER_3, POTION_TIMER_2, POTION_TIMER_1,
+        WALL, TREASURE_BOX, GHOST,
     })
 }
 
 func (b *Board) GetBarriers() []engine.Point {
-    return b.FindAllOf([]engine.Element{BOMB_HERO, OTHER_HERO, OTHER_BOMB_HERO, OTHER_DEAD_HERO,
-        BOMB_TIMER_5, BOMB_TIMER_4, BOMB_TIMER_3, BOMB_TIMER_2, BOMB_TIMER_1, BOOM,
-        WALL, DESTROYABLE_WALL, DESTROYED_WALL, MEAT_CHOPPER, DEAD_MEAT_CHOPPER})
+    return b.FindAllOf([]engine.Element{POTION_HERO, OTHER_HERO, OTHER_POTION_HERO, OTHER_DEAD_HERO,
+        POTION_TIMER_5, POTION_TIMER_4, POTION_TIMER_3, POTION_TIMER_2, POTION_TIMER_1, BOOM,
+        WALL, TREASURE_BOX, OPENING_TREASURE_BOX, GHOST, DEAD_GHOST})
 }
 
-func (b *Board) GetMeatChoppers() []engine.Point {
-    return b.FindAll(MEAT_CHOPPER)
+func (b *Board) GetGhosts() []engine.Point {
+    return b.FindAll(GHOST)
 }
 
 func (b *Board) GetWalls() []engine.Point {
     return b.FindAll(WALL)
 }
 
-func (b *Board) GetDestroyableWalls() []engine.Point {
-    return b.FindAll(DESTROYABLE_WALL)
+func (b *Board) GetTreasureBoxes() []engine.Point {
+    return b.FindAll(TREASURE_BOX)
 }
 
-func (b *Board) GetBombs() []engine.Point {
-    return b.FindAllOf([]engine.Element{BOMB_HERO, OTHER_BOMB_HERO,
-        BOMB_TIMER_5, BOMB_TIMER_4, BOMB_TIMER_3, BOMB_TIMER_2, BOMB_TIMER_1})
+func (b *Board) GetPotions() []engine.Point {
+    return b.FindAllOf([]engine.Element{POTION_HERO, OTHER_POTION_HERO,
+        POTION_TIMER_5, POTION_TIMER_4, POTION_TIMER_3, POTION_TIMER_2, POTION_TIMER_1})
 }
 
 func (b *Board) GetBlasts() []engine.Point {
@@ -59,17 +59,17 @@ func (b *Board) GetBlasts() []engine.Point {
 }
 
 func (b *Board) GetPerks() []engine.Point {
-    return b.FindAllOf([]engine.Element{BOMB_BLAST_RADIUS_INCREASE, BOMB_COUNT_INCREASE,
-        BOMB_IMMUNE, BOMB_REMOTE_CONTROL})
+    return b.FindAllOf([]engine.Element{POTION_BLAST_RADIUS_INCREASE, POTION_COUNT_INCREASE,
+        POTION_IMMUNE, POTION_REMOTE_CONTROL})
 }
 
 func (b *Board) GetFutureBlasts() []engine.Point {
     var futureBlasts []engine.Point
 
-    for _, bomb := range b.GetBombs() {
+    for _, potion := range b.GetPotions() {
         // right
         for i := 1; i <= BLAST_SIZE; i++ {
-            fBlast := engine.Point{X: bomb.X + i, Y: bomb.Y}
+            fBlast := engine.Point{X: potion.X + i, Y: potion.Y}
             if !b.IsValid(fBlast) || b.IsBarrierAt(fBlast) {
                 break
             }
@@ -77,7 +77,7 @@ func (b *Board) GetFutureBlasts() []engine.Point {
         }
         // left
         for i := 1; i <= BLAST_SIZE; i++ {
-            fBlast := engine.Point{X: bomb.X - i, Y: bomb.Y}
+            fBlast := engine.Point{X: potion.X - i, Y: potion.Y}
             if !b.IsValid(fBlast) || b.IsBarrierAt(fBlast) {
                 break
             }
@@ -85,7 +85,7 @@ func (b *Board) GetFutureBlasts() []engine.Point {
         }
         // up
         for i := 1; i <= BLAST_SIZE; i++ {
-            fBlast := engine.Point{X: bomb.X, Y: bomb.Y + i}
+            fBlast := engine.Point{X: potion.X, Y: potion.Y + i}
             if !b.IsValid(fBlast) || b.IsBarrierAt(fBlast) {
                 break
             }
@@ -93,7 +93,7 @@ func (b *Board) GetFutureBlasts() []engine.Point {
         }
         // down
         for i := 1; i <= BLAST_SIZE; i++ {
-            fBlast := engine.Point{X: bomb.X, Y: bomb.Y - i}
+            fBlast := engine.Point{X: potion.X, Y: potion.Y - i}
             if !b.IsValid(fBlast) || b.IsBarrierAt(fBlast) {
                 break
             }

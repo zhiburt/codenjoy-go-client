@@ -2,13 +2,13 @@ package main
 
 import (
 	"github.com/codenjoyme/codenjoy-go-client/engine"
-	"github.com/codenjoyme/codenjoy-go-client/games/bomberman"
+	"github.com/codenjoyme/codenjoy-go-client/games/mollymage"
 	"log"
 	"os"
 )
 
 const URL = "http://localhost:8080/codenjoy-contest/board/player/0?code=000000000000"
-const GAME = "bomberman"
+const GAME = "mollymage"
 
 type Solver interface {
 	Get(rawBoard []rune) string
@@ -51,8 +51,8 @@ func loadGameSolver() Solver {
 	}
 
 	switch game {
-	case "bomberman":
-		return &bomberman.Solver{B: &bomberman.Board{AbstractBoard: &engine.AbstractBoard{}}}
+	case "mollymage":
+		return &mollymage.Solver{B: &mollymage.Board{AbstractBoard: &engine.AbstractBoard{}}}
 	}
 	panic("unable to determine game type")
 }

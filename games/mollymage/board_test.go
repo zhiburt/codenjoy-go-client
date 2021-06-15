@@ -1,4 +1,4 @@
-package bomberman
+package mollymage
 
 import (
     "github.com/codenjoyme/codenjoy-go-client/engine"

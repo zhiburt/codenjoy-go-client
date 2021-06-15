@@ -11,12 +11,12 @@ const URL = "http://localhost:8080/codenjoy-contest/board/player/0?code=00000000
 ```go
 package main
 
-const GAME = "bomberman"
+const GAME = "mollymage"
 ```
 
 - implement your invincible solver algorithm
 ```go
-package bomberman
+package mollymage
 
 type Solver struct {
     B *Board
