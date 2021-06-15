@@ -12,7 +12,7 @@ import (
 const WebSocketContext = "/codenjoy-contest/ws"
 
 func CreateWebSocketConnection(browserUrl string) (Communication, *Envelope, error) {
-    u, err := createWebUrl(browserUrl)
+    u, err := CreateWebUrl(browserUrl)
     if err != nil {
         return Communication{}, &Envelope{}, err
     }
@@ -34,7 +34,7 @@ func CreateWebSocketConnection(browserUrl string) (Communication, *Envelope, err
     return communication, envelope, nil
 }
 
-func createWebUrl(browserUrl string) (url.URL, error) {
+func CreateWebUrl(browserUrl string) (url.URL, error) {
     originalUrl := browserUrl
 
     var schema string
