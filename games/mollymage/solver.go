@@ -6,27 +6,22 @@ import (
 )
 
 type Solver struct {
-	B *Board
 }
 
-func (s Solver) Get(rawBoard []rune) string {
-	s.B.UpdateBoard(rawBoard)
-	fmt.Printf("\nBoard:\n%s\n", s.B.BoardAsString())
-	fmt.Printf("Hero at: %v\n", s.B.GetHero())
-	fmt.Printf("Other heroes at: %v\n", s.B.GetOtherHeroes())
-	fmt.Printf("Ghosts at: %v\n", s.B.GetGhosts())
-	fmt.Printf("Treasure Boxes at: %v\n", s.B.GetTreasureBoxes())
-	fmt.Printf("Potions as: %v\n", s.B.GetPotions())
-	fmt.Printf("Blasts at: %v\n", s.B.GetBlasts())
-	fmt.Printf("Expected blasts at: %v\n", s.B.GetFutureBlasts())
+func NewSolver() engine.Solver {
+	return &Solver{}
+}
 
-	answer := s.nextStep()
-	fmt.Println("Answer: " + answer)
+func (s *Solver) Answer(message string) string {
+	board := NewBoard(message)
+	fmt.Println("Board \n" + board.String())
+	action := s.nextAction(board)
+	fmt.Println("\nAnswer: " + action)
 	fmt.Println("-------------------------------------------------------------")
-	return string(answer)
+	return action
 }
 
-func (s Solver) nextStep() Action {
-	// make your action
-	return MoveFire(engine.UP)
+func (s *Solver) nextAction(b *Board) string {
+	// TODO: write your code here
+	return ACT
 }

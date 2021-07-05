@@ -3,26 +3,25 @@ package engine
 import "fmt"
 
 type Point struct {
-    X, Y int
+	x, y int
+}
+
+func NewPoint(x int, y int) *Point {
+	return &Point{x, y}
+}
+
+func (p *Point) X() int {
+	return p.x
+}
+
+func (p *Point) Y() int {
+	return p.y
+}
+
+func (p *Point) IsValid(boardSize int) bool {
+	return (p.x >= 0 && p.x < boardSize) && (p.y >= 0 && p.y < boardSize)
 }
 
 func (p Point) String() string {
-    return fmt.Sprintf("[%d, %d]", p.X, p.Y)
-}
-
-func (b *AbstractBoard) IsValid(p Point) bool {
-    return (p.X >= 0 && p.X < b.Size) && (p.Y >= 0 && p.Y < b.Size)
-}
-
-func (b *AbstractBoard) IndexToPoint(index int) Point {
-    return Point{
-        X: index % b.Size,
-        Y: (b.Size - (index / b.Size)) - 1,
-    }
-}
-
-func (b *AbstractBoard) PointToIndex(p Point) int {
-    index := (b.Size - 1 - p.Y) * b.Size
-    index += p.X
-    return index
+	return fmt.Sprintf("[%d,%d]", p.x, p.y)
 }

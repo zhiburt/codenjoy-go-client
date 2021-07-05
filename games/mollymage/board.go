@@ -1,119 +1,108 @@
 package mollymage
 
 import (
-    "github.com/codenjoyme/codenjoy-go-client/engine"
+	"errors"
+	"fmt"
+	"github.com/codenjoyme/codenjoy-go-client/engine"
 )
 
 const BLAST_SIZE int = 3
 
 type Board struct {
-    *engine.AbstractBoard
+	board *engine.GameBoard
 }
 
-func (b *Board) GetHero() []engine.Point {
-    return b.FindAllOf([]engine.Element{HERO, POTION_HERO})
+func NewBoard(message string) *Board {
+	elementsValues := make([]string, 0, len(elements))
+	for _, tx := range elements {
+		elementsValues = append(elementsValues, tx)
+	}
+	return &Board{engine.NewGameBoard(elementsValues, message)}
 }
 
-func (b *Board) GetOtherHeroes() []engine.Point {
-    return b.FindAll(OTHER_HERO)
+func (b *Board) GetAt(pt *engine.Point) string {
+	if !pt.IsValid(b.board.GetSize()) {
+		return elements["WALL"]
+	}
+	el, _ := b.board.GetAt(pt)
+	return el
 }
 
-func (b *Board) IsMyHeroDead() bool {
-    _, err := b.FindOne(DEAD_HERO)
-    return err == nil
+func (b *Board) FindHero() (*engine.Point, error) {
+	points := b.board.Find(elements["HERO"],
+		elements["POTION_HERO"],
+		elements["DEAD_HERO"])
+	if len(points) == 0 {
+		return &engine.Point{}, errors.New("hero element has not been found")
+	}
+	return points[0], nil
 }
 
-func (b *Board) IsBarrierAt(point engine.Point) bool {
-    return b.IsAtAny(point, []engine.Element{
-        HERO, POTION_HERO, OTHER_HERO, OTHER_POTION_HERO,
-        POTION_TIMER_5, POTION_TIMER_4, POTION_TIMER_3, POTION_TIMER_2, POTION_TIMER_1,
-        WALL, TREASURE_BOX, GHOST,
-    })
+func (b *Board) IsGameOver() bool {
+	return len(b.board.Find(elements["DEAD_HERO"])) != 0
 }
 
-func (b *Board) GetBarriers() []engine.Point {
-    return b.FindAllOf([]engine.Element{POTION_HERO, OTHER_HERO, OTHER_POTION_HERO, OTHER_DEAD_HERO,
-        POTION_TIMER_5, POTION_TIMER_4, POTION_TIMER_3, POTION_TIMER_2, POTION_TIMER_1, BOOM,
-        WALL, TREASURE_BOX, OPENING_TREASURE_BOX, GHOST, DEAD_GHOST})
+func (b *Board) FindOtherHeroes() []*engine.Point {
+	return b.board.Find(elements["OTHER_HERO"],
+		elements["OTHER_POTION_HERO"],
+		elements["OTHER_DEAD_HERO"])
 }
 
-func (b *Board) GetGhosts() []engine.Point {
-    return b.FindAll(GHOST)
+func (b *Board) FindBarriers() []*engine.Point {
+	var points []*engine.Point
+	points = append(points, b.FindWalls()...)
+	points = append(points, b.FindGhosts()...)
+	points = append(points, b.FindTreasureBoxes()...)
+	points = append(points, b.FindPotions()...)
+	points = append(points, b.FindOtherHeroes()...)
+	return points
 }
 
-func (b *Board) GetWalls() []engine.Point {
-    return b.FindAll(WALL)
+func (b *Board) FindWalls() []*engine.Point {
+	return b.board.Find(elements["WALL"])
 }
 
-func (b *Board) GetTreasureBoxes() []engine.Point {
-    return b.FindAll(TREASURE_BOX)
+func (b *Board) FindGhosts() []*engine.Point {
+	return b.board.Find(elements["GHOST"])
 }
 
-func (b *Board) GetPotions() []engine.Point {
-    return b.FindAllOf([]engine.Element{POTION_HERO, OTHER_POTION_HERO,
-        POTION_TIMER_5, POTION_TIMER_4, POTION_TIMER_3, POTION_TIMER_2, POTION_TIMER_1})
+func (b *Board) FindTreasureBoxes() []*engine.Point {
+	return b.board.Find(elements["TREASURE_BOX"])
 }
 
-func (b *Board) GetBlasts() []engine.Point {
-    return b.FindAll(BOOM)
+func (b *Board) FindPotions() []*engine.Point {
+	return b.board.Find(elements["POTION_TIMER_1"],
+		elements["POTION_TIMER_2"],
+		elements["POTION_TIMER_3"],
+		elements["POTION_TIMER_4"],
+		elements["POTION_TIMER_5"],
+		elements["POTION_HERO"],
+		elements["OTHER_POTION_HERO"])
 }
 
-func (b *Board) GetPerks() []engine.Point {
-    return b.FindAllOf([]engine.Element{POTION_BLAST_RADIUS_INCREASE, POTION_COUNT_INCREASE,
-        POTION_IMMUNE, POTION_REMOTE_CONTROL})
+func (b *Board) FindBlasts() []*engine.Point {
+	return b.board.Find(elements["BOOM"])
 }
 
-func (b *Board) GetFutureBlasts() []engine.Point {
-    var futureBlasts []engine.Point
-
-    for _, potion := range b.GetPotions() {
-        // right
-        for i := 1; i <= BLAST_SIZE; i++ {
-            fBlast := engine.Point{X: potion.X + i, Y: potion.Y}
-            if !b.IsValid(fBlast) || b.IsBarrierAt(fBlast) {
-                break
-            }
-            futureBlasts = append(futureBlasts, fBlast)
-        }
-        // left
-        for i := 1; i <= BLAST_SIZE; i++ {
-            fBlast := engine.Point{X: potion.X - i, Y: potion.Y}
-            if !b.IsValid(fBlast) || b.IsBarrierAt(fBlast) {
-                break
-            }
-            futureBlasts = append(futureBlasts, fBlast)
-        }
-        // up
-        for i := 1; i <= BLAST_SIZE; i++ {
-            fBlast := engine.Point{X: potion.X, Y: potion.Y + i}
-            if !b.IsValid(fBlast) || b.IsBarrierAt(fBlast) {
-                break
-            }
-            futureBlasts = append(futureBlasts, fBlast)
-        }
-        // down
-        for i := 1; i <= BLAST_SIZE; i++ {
-            fBlast := engine.Point{X: potion.X, Y: potion.Y - i}
-            if !b.IsValid(fBlast) || b.IsBarrierAt(fBlast) {
-                break
-            }
-            futureBlasts = append(futureBlasts, fBlast)
-        }
-    }
-
-    return removeDuplicates(futureBlasts)
+func (b *Board) PredictFutureBlasts() []*engine.Point {
+	// TODO: implement
+	return []*engine.Point{}
 }
 
-func removeDuplicates(points []engine.Point) []engine.Point {
-    set := make(map[engine.Point]struct{})
-    for _, p := range points {
-        if _, ok := set[p]; !ok {
-            set[p] = struct{}{}
-        }
-    }
-    res := make([]engine.Point, 0, len(set))
-    for p, _ := range set {
-        res = append(res, p)
-    }
-    return res
+func (b *Board) FindPerks() []*engine.Point {
+	return b.board.Find(elements["POTION_COUNT_INCREASE"],
+		elements["POTION_REMOTE_CONTROL"],
+		elements["POTION_IMMUNE"],
+		elements["POTION_BLAST_RADIUS_INCREASE"])
+}
+
+func (b *Board) String() string {
+	hero, _ := b.FindHero()
+	return b.board.String() +
+		"\nHero at: " + hero.String() +
+		"\nOther heroes at: " + fmt.Sprintf("%v", b.FindOtherHeroes()) +
+		"\nGhosts at: " + fmt.Sprintf("%v", b.FindGhosts()) +
+		"\nPotions at: " + fmt.Sprintf("%v", b.FindPotions()) +
+		"\nBlasts at: " + fmt.Sprintf("%v", b.FindBlasts()) +
+		"\nExpected blasts at: " + fmt.Sprintf("%v", b.PredictFutureBlasts())
 }
