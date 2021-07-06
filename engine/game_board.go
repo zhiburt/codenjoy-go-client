@@ -1,55 +1,54 @@
 package engine
 
 import (
-	"errors"
 	"fmt"
 	"math"
 	"strings"
 )
 
 type GameBoard struct {
-	elements []string
+	elements []rune
 	len      int
 	size     int
 }
 
-func NewGameBoard(supportedElements []string, message string) *GameBoard {
+func NewGameBoard(supportedElements []rune, message string) *GameBoard {
 	board := GameBoard{}
 	message = strings.Replace(message, "board=", "", 1)
-	board.initElementsArray(supportedElements, message)
+	board.initElementsArray(supportedElements, []rune(message))
 	board.len = len(board.elements)
 	board.size = int(math.Sqrt(float64(board.len)))
 	return &board
 }
 
-func (b *GameBoard) initElementsArray(supportedElements []string, message string) error {
-	b.elements = make([]string, len(message))
+func (b *GameBoard) initElementsArray(supportedElements []rune, rawBoard []rune) {
+	b.elements = make([]rune, len(rawBoard))
 	for i := 0; i < len(b.elements); i++ {
-		nextElement := string(message[i])
+		nextElement := rawBoard[i]
 		for _, v := range supportedElements {
 			if nextElement == v {
 				b.elements[i] = nextElement
 				break
-			} else {
-				return errors.New(fmt.Sprintf("invalid element: %s", nextElement))
 			}
 		}
+		if b.elements[i] == 0 {
+			panic(fmt.Sprintf("invalid element: %v", nextElement))
+		}
 	}
-	return nil
 }
 
 func (b *GameBoard) GetSize() int {
 	return b.size
 }
 
-func (b *GameBoard) GetAt(pt *Point) (string, error) {
+func (b *GameBoard) GetAt(pt *Point) rune {
 	if !pt.IsValid(b.size) {
-		return "", errors.New(fmt.Sprintf("invalid point %s" + pt.String()))
+		panic(fmt.Sprintf("invalid point %s" + pt.String()))
 	}
-	return b.elements[b.pointToIndex(pt.X(), pt.Y())], nil
+	return b.elements[b.pointToIndex(pt.X(), pt.Y())]
 }
 
-func (b *GameBoard) Find(wanted ...string) []*Point {
+func (b *GameBoard) Find(wanted ...rune) []*Point {
 	var points []*Point
 	for _, w := range wanted {
 		for i, el := range b.elements {
@@ -61,7 +60,7 @@ func (b *GameBoard) Find(wanted ...string) []*Point {
 	return points
 }
 
-func (b *GameBoard) FindFirst(wanted ...string) *Point {
+func (b *GameBoard) FindFirst(wanted ...rune) *Point {
 	for _, w := range wanted {
 		for j, el := range b.elements {
 			if w == el {
@@ -72,14 +71,11 @@ func (b *GameBoard) FindFirst(wanted ...string) *Point {
 	return nil
 }
 
-func (b *GameBoard) IsAt(pt *Point, wanted ...string) bool {
+func (b *GameBoard) IsAt(pt *Point, wanted ...rune) bool {
 	if !pt.IsValid(b.size) {
 		return false
 	}
-	el, err := b.GetAt(pt)
-	if err != nil {
-		return false
-	}
+	el := b.GetAt(pt)
 	for _, w := range wanted {
 		if w == el {
 			return true
@@ -88,34 +84,30 @@ func (b *GameBoard) IsAt(pt *Point, wanted ...string) bool {
 	return false
 }
 
-func (b *GameBoard) FindNear(pt *Point) []string {
-	var elements []string
+func (b *GameBoard) FindNear(pt *Point) []rune {
+	var elements []rune
 
 	right := NewPoint(pt.X()+1, pt.Y())
 	if right.IsValid(b.size) {
-		el, _ := b.GetAt(right)
-		elements = append(elements, el)
+		elements = append(elements, b.GetAt(right))
 	}
 	left := NewPoint(pt.X()-1, pt.Y())
 	if left.IsValid(b.size) {
-		el, _ := b.GetAt(left)
-		elements = append(elements, el)
+		elements = append(elements, b.GetAt(left))
 	}
 	up := NewPoint(pt.X(), pt.Y()+1)
 	if up.IsValid(b.size) {
-		el, _ := b.GetAt(up)
-		elements = append(elements, el)
+		elements = append(elements, b.GetAt(up))
 	}
 	down := NewPoint(pt.X()+1, pt.Y()-1)
 	if down.IsValid(b.size) {
-		el, _ := b.GetAt(down)
-		elements = append(elements, el)
+		elements = append(elements, b.GetAt(down))
 	}
 
 	return elements
 }
 
-func (b *GameBoard) CountNear(pt *Point, wanted ...string) int {
+func (b *GameBoard) CountNear(pt *Point, wanted ...rune) int {
 	counter := 0
 	for _, el := range b.FindNear(pt) {
 		for _, w := range wanted {
@@ -127,7 +119,7 @@ func (b *GameBoard) CountNear(pt *Point, wanted ...string) int {
 	return counter
 }
 
-func (b *GameBoard) IsNear(pt *Point, wanted ...string) bool {
+func (b *GameBoard) IsNear(pt *Point, wanted ...rune) bool {
 	for _, w := range wanted {
 		if b.CountNear(pt, w) != 0 {
 			return true
@@ -152,6 +144,7 @@ func (b *GameBoard) String() string {
 		for x := 0; x < b.size; x++ {
 			builder.WriteString(string(b.elements[b.pointToIndex(x, y)]))
 		}
+		builder.WriteString("\n")
 	}
 	return builder.String()
 }

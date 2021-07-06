@@ -15,10 +15,10 @@ type WebSocketRunner struct {
 }
 
 func NewWebSocketRunner(url string) *WebSocketRunner {
-	return &WebSocketRunner{urlToWsToken(url)}
+	return &WebSocketRunner{UrlToWsToken(url)}
 }
 
-func urlToWsToken(url string) string {
+func UrlToWsToken(url string) string {
 	r := regexp.MustCompile(URL_REGEX)
 	params := r.FindStringSubmatch(url)
 

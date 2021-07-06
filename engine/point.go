@@ -19,7 +19,7 @@ func (p *Point) Y() int {
 }
 
 func (p *Point) IsValid(boardSize int) bool {
-	return (p.x >= 0 && p.x < boardSize) && (p.y >= 0 && p.y < boardSize)
+	return (p.x >= 0 && p.x <= boardSize) && (p.y >= 0 && p.y <= boardSize)
 }
 
 func (p Point) String() string {
