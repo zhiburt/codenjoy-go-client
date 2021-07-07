@@ -3,6 +3,7 @@ package engine
 import (
 	"fmt"
 	"math"
+	"sort"
 	"strings"
 )
 
@@ -50,21 +51,22 @@ func (b *GameBoard) GetAt(pt *Point) rune {
 
 func (b *GameBoard) Find(wanted ...rune) []*Point {
 	var points []*Point
-	for _, w := range wanted {
-		for i, el := range b.elements {
+	for i, el := range b.elements {
+		for _, w := range wanted {
 			if w == el {
 				points = append(points, b.indexToPoint(i))
 			}
 		}
 	}
+	sort.Sort(SortedPoints(points))
 	return points
 }
 
 func (b *GameBoard) FindFirst(wanted ...rune) *Point {
-	for _, w := range wanted {
-		for j, el := range b.elements {
+	for i, el := range b.elements {
+		for _, w := range wanted {
 			if w == el {
-				return b.indexToPoint(j)
+				return b.indexToPoint(i)
 			}
 		}
 	}
@@ -99,7 +101,7 @@ func (b *GameBoard) FindNear(pt *Point) []rune {
 	if up.IsValid(b.size) {
 		elements = append(elements, b.GetAt(up))
 	}
-	down := NewPoint(pt.X()+1, pt.Y()-1)
+	down := NewPoint(pt.X(), pt.Y()-1)
 	if down.IsValid(b.size) {
 		elements = append(elements, b.GetAt(down))
 	}

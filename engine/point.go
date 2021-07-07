@@ -1,6 +1,8 @@
 package engine
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Point struct {
 	x, y int
@@ -19,9 +21,15 @@ func (p *Point) Y() int {
 }
 
 func (p *Point) IsValid(boardSize int) bool {
-	return (p.x >= 0 && p.x <= boardSize) && (p.y >= 0 && p.y <= boardSize)
+	return (p.x >= 0 && p.x < boardSize) && (p.y >= 0 && p.y < boardSize)
 }
 
-func (p Point) String() string {
+func (p *Point) String() string {
 	return fmt.Sprintf("[%d,%d]", p.x, p.y)
 }
+
+type SortedPoints []*Point
+
+func (p SortedPoints) Len() int           { return len(p) }
+func (p SortedPoints) Less(i, j int) bool { return p[i].String() < p[j].String() }
+func (p SortedPoints) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }

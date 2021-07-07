@@ -3,6 +3,8 @@ package mollymage
 import (
 	"fmt"
 	"github.com/codenjoyme/codenjoy-go-client/engine"
+	"reflect"
+	"sort"
 )
 
 const BLAST_SIZE int = 3
@@ -48,12 +50,29 @@ func (b *Board) FindOtherHeroes() []*engine.Point {
 
 func (b *Board) FindBarriers() []*engine.Point {
 	var points []*engine.Point
-	points = append(points, b.FindWalls()...)
-	points = append(points, b.FindGhosts()...)
-	points = append(points, b.FindTreasureBoxes()...)
-	points = append(points, b.FindPotions()...)
-	points = append(points, b.FindOtherHeroes()...)
+	points = appendIfMissing(points, b.FindWalls()...)
+	points = appendIfMissing(points, b.FindGhosts()...)
+	points = appendIfMissing(points, b.FindTreasureBoxes()...)
+	points = appendIfMissing(points, b.FindPotions()...)
+	points = appendIfMissing(points, b.FindOtherHeroes()...)
+	sort.Sort(engine.SortedPoints(points))
 	return points
+}
+
+func appendIfMissing(slice []*engine.Point, points ...*engine.Point) []*engine.Point {
+	for _, p := range points {
+		existed := false
+		for _, ele := range slice {
+			if reflect.DeepEqual(ele, p) {
+				existed = true
+				break
+			}
+		}
+		if !existed {
+			slice = append(slice, p)
+		}
+	}
+	return slice
 }
 
 func (b *Board) FindWalls() []*engine.Point {

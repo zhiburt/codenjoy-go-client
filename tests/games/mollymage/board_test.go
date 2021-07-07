@@ -42,12 +42,12 @@ func TestIsGameOver(t *testing.T) {
 
 func TestFindOtherHeroes(t *testing.T) {
 	board := mollymage.NewBoard("#♥#" + "#♠#" + "#♣#")
-	assert.Equal(t, "[[0,1] [1,1] [1,2]]", fmt.Sprintf("%v", board.FindOtherHeroes()))
+	assert.Equal(t, "[[1,0] [1,1] [1,2]]", fmt.Sprintf("%v", board.FindOtherHeroes()))
 }
 
 func TestFindBarriers(t *testing.T) {
 	board := mollymage.NewBoard("☼&#" + "123" + "♥♠♣")
-	assert.Equal(t, "[[0,0] [0,1] [0,2] [1,0] [1,1] [1,2] [2,0], [2,1] [2,2]]",
+	assert.Equal(t, "[[0,0] [0,1] [0,2] [1,0] [1,1] [1,2] [2,0] [2,1] [2,2]]",
 		fmt.Sprintf("%v", board.FindBarriers()))
 }
 
@@ -73,8 +73,8 @@ func TestFindPotions(t *testing.T) {
 }
 
 func TestFindBlasts(t *testing.T) {
-	board := mollymage.NewBoard("123" + "45#" + "☻♠#")
-	assert.Equal(t, "[2,0]", fmt.Sprintf("%v", board.FindBlasts()))
+	board := mollymage.NewBoard("###" + "###" + "##҉")
+	assert.Equal(t, "[[2,0]]", fmt.Sprintf("%v", board.FindBlasts()))
 }
 
 func TestFindPerks(t *testing.T) {
