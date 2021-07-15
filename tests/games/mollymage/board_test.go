@@ -45,6 +45,11 @@ func TestFindOtherHeroes(t *testing.T) {
 	assert.Equal(t, "[[1,0] [1,1] [1,2]]", fmt.Sprintf("%v", board.FindOtherHeroes()))
 }
 
+func TestFindEnemyHeroes(t *testing.T) {
+	board := mollymage.NewBoard("#♡#" + "#♤#" + "#♧#")
+	assert.Equal(t, "[[1,0] [1,1] [1,2]]", fmt.Sprintf("%v", board.FindEnemyHeroes()))
+}
+
 func TestFindBarriers(t *testing.T) {
 	board := mollymage.NewBoard("☼&#" + "123" + "♥♠♣")
 	assert.Equal(t, "[[0,0] [0,1] [0,2] [1,0] [1,1] [1,2] [2,0] [2,1] [2,2]]",
@@ -89,7 +94,7 @@ func TestReport(t *testing.T) {
 		"☼#2  &  ☼" +
 		"☼# 3 ♣ ♠☼" +
 		"☼☺  4   ☼" +
-		"☼   ♥ H☻☼" +
+		"☼   ♡ H☻☼" +
 		"☼x H ҉҉҉☼" +
 		"☼& &    ☼" +
 		"☼☼☼☼☼☼☼☼☼")
@@ -98,13 +103,14 @@ func TestReport(t *testing.T) {
 		"☼#2  &  ☼\n"+
 		"☼# 3 ♣ ♠☼\n"+
 		"☼☺  4   ☼\n"+
-		"☼   ♥ H☻☼\n"+
+		"☼   ♡ H☻☼\n"+
 		"☼x H ҉҉҉☼\n"+
 		"☼& &    ☼\n"+
 		"☼☼☼☼☼☼☼☼☼\n"+
 		"\n"+
 		"Hero at: [1,4]\n"+
-		"Other heroes at: [[3,7] [4,3] [5,5] [7,5] [7,7]]\n"+
+		"Other heroes at: [[3,7] [5,5] [7,5] [7,7]]\n"+
+		"Enemy heroes at: [[4,3]]\n"+
 		"Ghosts at: [[1,1] [3,1] [5,6]]\n"+
 		"Potions at: [[1,7] [2,6] [3,5] [4,4] [7,3] [7,5] [7,7]]\n"+
 		"Blasts at: [[5,2] [6,2] [7,2]]\n"+

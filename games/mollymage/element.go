@@ -1,7 +1,7 @@
 package mollymage
 
 var Elements = map[string]rune{
-	/// your Molly
+/// your Molly
 
 	// This is what she usually looks like.
 	"HERO": '☺',
@@ -14,20 +14,33 @@ var Elements = map[string]rune{
 	// You"re getting penalty points for each death.
 	"DEAD_HERO": 'Ѡ',
 
-	/// other players heroes
+/// other players heroes
 
-	// This is what other heroes looks like.
-	"OTHER_HERO": '♥',
+    // This is what other heroes looks like.
+    "OTHER_HERO": '♥',
 
-	// This is if player is sitting on own potion.
-	"OTHER_POTION_HERO": '♠',
+    // This is if other hero is sitting on own potion.
+    "OTHER_POTION_HERO": '♠',
 
-	// Enemy corpse (it will disappear shortly,
-	// right on the next move).
-	// If you"ve done it you"ll get score points.
-	"OTHER_DEAD_HERO": '♣',
+    // Other hero corpse (it will disappear shortly,
+    // right on the next move).
+    // If you've done it you'll get score points.
+    "OTHER_DEAD_HERO": '♣',
 
-	/// the potions
+/// enemy players heroes
+
+    // This is what enemy heroes looks like.
+    "ENEMY_HERO": '♡',
+
+    // This is if enemy hero is sitting on own potion.
+    "ENEMY_POTION_HERO": '♤',
+
+    // Enemy hero corpse (it will disappear shortly,
+    // right on the next move).
+    // If you've done it you'll get score points.
+    "ENEMY_DEAD_HERO": '♧',
+
+/// the potions
 	// After Molly set the potion, the timer starts (5 ticks).
 	"POTION_TIMER_5": '5',
 
@@ -47,7 +60,7 @@ var Elements = map[string]rune{
 	// everything that is destroyable got destroyed.
 	"BOOM": '҉',
 
-	/// walls
+/// walls
 
 	// Indestructible wall - it will not fall from potion.
 	"WALL": '☼',
@@ -73,7 +86,7 @@ var Elements = map[string]rune{
 	// This is ghost corpse.
 	"DEAD_GHOST": 'x',
 
-	/// perks
+/// perks
 
 	// Potion blast radius increase.
 	// Applicable only to new potions.
@@ -94,7 +107,7 @@ var Elements = map[string]rune{
 	// (own potion and others as well). Temporary.
 	"POTION_IMMUNE": 'i',
 
-	/// a void
+/// a void
 	// This is the only place where you can move your Molly.
 	"NONE": ' ',
 }

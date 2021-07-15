@@ -48,6 +48,12 @@ func (b *Board) FindOtherHeroes() []*engine.Point {
 		Elements["OTHER_DEAD_HERO"])
 }
 
+func (b *Board) FindEnemyHeroes() []*engine.Point {
+	return b.board.Find(Elements["ENEMY_HERO"],
+		Elements["ENEMY_POTION_HERO"],
+		Elements["ENEMY_DEAD_HERO"])
+}
+
 func (b *Board) FindBarriers() []*engine.Point {
 	var points []*engine.Point
 	points = appendIfMissing(points, b.FindWalls()...)
@@ -55,6 +61,7 @@ func (b *Board) FindBarriers() []*engine.Point {
 	points = appendIfMissing(points, b.FindTreasureBoxes()...)
 	points = appendIfMissing(points, b.FindPotions()...)
 	points = appendIfMissing(points, b.FindOtherHeroes()...)
+	points = appendIfMissing(points, b.FindEnemyHeroes()...)
 	sort.Sort(engine.SortedPoints(points))
 	return points
 }
@@ -94,7 +101,8 @@ func (b *Board) FindPotions() []*engine.Point {
 		Elements["POTION_TIMER_4"],
 		Elements["POTION_TIMER_5"],
 		Elements["POTION_HERO"],
-		Elements["OTHER_POTION_HERO"])
+		Elements["OTHER_POTION_HERO"],
+		Elements["ENEMY_POTION_HERO"])
 }
 
 func (b *Board) FindBlasts() []*engine.Point {
@@ -117,6 +125,7 @@ func (b *Board) String() string {
 	return b.board.String() +
 		"\nHero at: " + b.FindHero().String() +
 		"\nOther heroes at: " + fmt.Sprintf("%v", b.FindOtherHeroes()) +
+		"\nEnemy heroes at: " + fmt.Sprintf("%v", b.FindEnemyHeroes()) +
 		"\nGhosts at: " + fmt.Sprintf("%v", b.FindGhosts()) +
 		"\nPotions at: " + fmt.Sprintf("%v", b.FindPotions()) +
 		"\nBlasts at: " + fmt.Sprintf("%v", b.FindBlasts()) +
