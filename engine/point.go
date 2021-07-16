@@ -28,6 +28,22 @@ func (p *Point) String() string {
 	return fmt.Sprintf("[%d,%d]", p.x, p.y)
 }
 
+func StepRight(pt *Point) *Point {
+	return NewPoint(pt.X()+1, pt.Y())
+}
+
+func StepLeft(pt *Point) *Point {
+	return NewPoint(pt.X()-1, pt.Y())
+}
+
+func StepUp(pt *Point) *Point {
+	return NewPoint(pt.X(), pt.Y()+1)
+}
+
+func StepDown(pt *Point) *Point {
+	return NewPoint(pt.X(), pt.Y()-1)
+}
+
 type SortedPoints []*Point
 
 func (p SortedPoints) Len() int           { return len(p) }
