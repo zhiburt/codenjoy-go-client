@@ -126,7 +126,7 @@ func (b *Board) PredictBlastsForOneSide(pt *engine.Point, nextStep Move) []*engi
 	barriers := b.FindBarriers()
 
 	var points []*engine.Point
-	for i := 0; i < BLAST_RANGE; i++ {
+	for i := 1; i <= BLAST_RANGE; i++ {
 		pt = nextStep(pt)
 		if !pt.IsValid(b.board.GetSize()) {
 			break
