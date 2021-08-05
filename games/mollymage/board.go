@@ -150,7 +150,8 @@ func (b *Board) FindPerks() []*engine.Point {
 	return b.board.Find(Elements["POTION_COUNT_INCREASE"],
 		Elements["POTION_REMOTE_CONTROL"],
 		Elements["POTION_IMMUNE"],
-		Elements["POTION_BLAST_RADIUS_INCREASE"])
+		Elements["POTION_BLAST_RADIUS_INCREASE"],
+		Elements["POISON_THROWER"])
 }
 
 func (b *Board) String() string {
