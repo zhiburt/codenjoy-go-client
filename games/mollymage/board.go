@@ -7,7 +7,7 @@ import (
 	"sort"
 )
 
-const BLAST_SIZE int = 3
+const BLAST_RANGE int = 3
 
 type Board struct {
 	board *engine.GameBoard
@@ -110,15 +110,48 @@ func (b *Board) FindBlasts() []*engine.Point {
 }
 
 func (b *Board) PredictFutureBlasts() []*engine.Point {
-	// TODO: implement
-	return []*engine.Point{}
+	var barriers []*engine.Point
+	for _, potion := range b.board.Find(Elements["POTION_TIMER_1"]) {
+		barriers = append(barriers, b.PredictBlastsForOneSide(potion, engine.StepLeft)...)
+		barriers = append(barriers, b.PredictBlastsForOneSide(potion, engine.StepRight)...)
+		barriers = append(barriers, b.PredictBlastsForOneSide(potion, engine.StepUp)...)
+		barriers = append(barriers, b.PredictBlastsForOneSide(potion, engine.StepDown)...)
+	}
+	return barriers
+}
+
+type Move func(*engine.Point) *engine.Point
+
+func (b *Board) PredictBlastsForOneSide(pt *engine.Point, nextStep Move) []*engine.Point {
+	barriers := b.FindBarriers()
+
+	var points []*engine.Point
+	for i := 0; i < BLAST_RANGE; i++ {
+		pt = nextStep(pt)
+		if !pt.IsValid(b.board.GetSize()) {
+			break
+		}
+		isBarrier := false
+		for _, barrier := range barriers {
+			if reflect.DeepEqual(barrier, pt) {
+				isBarrier = true
+				break
+			}
+		}
+		if isBarrier == true {
+			break
+		}
+		points = append(points, pt)
+	}
+	return points
 }
 
 func (b *Board) FindPerks() []*engine.Point {
 	return b.board.Find(Elements["POTION_COUNT_INCREASE"],
 		Elements["POTION_REMOTE_CONTROL"],
 		Elements["POTION_IMMUNE"],
-		Elements["POTION_BLAST_RADIUS_INCREASE"])
+		Elements["POTION_BLAST_RADIUS_INCREASE"],
+		Elements["POISON_THROWER"])
 }
 
 func (b *Board) String() string {

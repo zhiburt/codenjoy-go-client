@@ -83,8 +83,8 @@ func TestFindBlasts(t *testing.T) {
 }
 
 func TestFindPerks(t *testing.T) {
-	board := mollymage.NewBoard("#cr" + "#i+" + "###")
-	assert.Equal(t, "[[1,1] [1,2] [2,1] [2,2]]", fmt.Sprintf("%v", board.FindPerks()))
+	board := mollymage.NewBoard("#cr" + "#i+" + "#T#")
+	assert.Equal(t, "[[1,0] [1,1] [1,2] [2,1] [2,2]]", fmt.Sprintf("%v", board.FindPerks()))
 }
 
 func TestReport(t *testing.T) {
@@ -114,5 +114,5 @@ func TestReport(t *testing.T) {
 		"Ghosts at: [[1,1] [3,1] [5,6]]\n"+
 		"Potions at: [[1,7] [2,6] [3,5] [4,4] [7,3] [7,5] [7,7]]\n"+
 		"Blasts at: [[5,2] [6,2] [7,2]]\n"+
-		"Expected blasts at: []", board.String())
+		"Expected blasts at: [[2,7]]", board.String())
 }
