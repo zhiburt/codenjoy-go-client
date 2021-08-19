@@ -111,6 +111,11 @@ var Elements = map[string]rune{
 	// Temporary.
 	"POISON_THROWER": 'T',
 
+	// Hero can explode all potions on the field
+	// Temporary.
+	"POTION_EXPLODER": 'A',
+
+
 	/// a void
 	// This is the only place where you can move your Molly.
 	"NONE": ' ',
