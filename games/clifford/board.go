@@ -33,6 +33,8 @@ func (b *Board) FindHero() *engine.Point {
 		Elements["HERO_PIPE_LEFT"],
 		Elements["HERO_PIPE_RIGHT"],
 		Elements["HERO_DIE"],
+		Elements["HERO_PIT_LEFT"],
+		Elements["HERO_PIT_RIGHT"],
 
 		Elements["HERO_MASK_LEFT"],
 		Elements["HERO_MASK_RIGHT"],
@@ -43,7 +45,9 @@ func (b *Board) FindHero() *engine.Point {
 		Elements["HERO_MASK_FALL_RIGHT"],
 		Elements["HERO_MASK_PIPE_LEFT"],
 		Elements["HERO_MASK_PIPE_RIGHT"],
-		Elements["HERO_MASK_DIE"])
+		Elements["HERO_MASK_DIE"],
+		Elements["HERO_MASK_PIT_LEFT"],
+		Elements["HERO_MASK_PIT_RIGHT"])
 	if len(points) == 0 {
 		panic("hero element has not been found")
 	}
@@ -62,8 +66,10 @@ func (b *Board) FindOtherHeroes() []*engine.Point {
 		Elements["OTHER_HERO_FALL_RIGHT"],
 		Elements["OTHER_HERO_PIPE_LEFT"],
 		Elements["OTHER_HERO_PIPE_RIGHT"],
-		Elements["OTHER_HERO_MASK_DIE"],
+		Elements["OTHER_HERO_PIT_LEFT"],
+		Elements["OTHER_HERO_PIT_RIGHT"],
 
+		Elements["OTHER_HERO_MASK_DIE"],
 		Elements["OTHER_HERO_MASK_CRACK_LEFT"],
 		Elements["OTHER_HERO_MASK_CRACK_RIGHT"],
 		Elements["OTHER_HERO_MASK_LADDER"],
@@ -72,7 +78,9 @@ func (b *Board) FindOtherHeroes() []*engine.Point {
 		Elements["OTHER_HERO_MASK_FALL_LEFT"],
 		Elements["OTHER_HERO_MASK_FALL_RIGHT"],
 		Elements["OTHER_HERO_MASK_PIPE_LEFT"],
-		Elements["OTHER_HERO_MASK_PIPE_RIGHT"])
+		Elements["OTHER_HERO_MASK_PIPE_RIGHT"],
+		Elements["OTHER_HERO_MASK_PIT_LEFT"],
+		Elements["OTHER_HERO_MASK_PIT_RIGHT"])
 }
 
 func (b *Board) FindEnemyHeroes() []*engine.Point {
@@ -87,8 +95,10 @@ func (b *Board) FindEnemyHeroes() []*engine.Point {
 		Elements["ENEMY_HERO_FALL_RIGHT"],
 		Elements["ENEMY_HERO_PIPE_LEFT"],
 		Elements["ENEMY_HERO_PIPE_RIGHT"],
-		Elements["ENEMY_HERO_MASK_DIE"],
+		Elements["ENEMY_HERO_PIT_LEFT"],
+		Elements["ENEMY_HERO_PIT_RIGHT"],
 
+		Elements["ENEMY_HERO_MASK_DIE"],
 		Elements["ENEMY_HERO_MASK_CRACK_LEFT"],
 		Elements["ENEMY_HERO_MASK_CRACK_RIGHT"],
 		Elements["ENEMY_HERO_MASK_LADDER"],
@@ -97,7 +107,9 @@ func (b *Board) FindEnemyHeroes() []*engine.Point {
 		Elements["ENEMY_HERO_MASK_FALL_LEFT"],
 		Elements["ENEMY_HERO_MASK_FALL_RIGHT"],
 		Elements["ENEMY_HERO_MASK_PIPE_LEFT"],
-		Elements["ENEMY_HERO_MASK_PIPE_RIGHT"])
+		Elements["ENEMY_HERO_MASK_PIPE_RIGHT"],
+		Elements["ENEMY_HERO_MASK_PIT_LEFT"],
+		Elements["ENEMY_HERO_MASK_PIT_RIGHT"])
 }
 
 func (b *Board) FindRobbers() []*engine.Point {
@@ -105,6 +117,8 @@ func (b *Board) FindRobbers() []*engine.Point {
 		Elements["ROBBER_LADDER"],
 		Elements["ROBBER_LEFT"],
 		Elements["ROBBER_RIGHT"],
+		Elements["ROBBER_FALL_LEFT"],
+		Elements["ROBBER_FALL_RIGHT"],
 		Elements["ROBBER_PIPE_LEFT"],
 		Elements["ROBBER_PIPE_RIGHT"],
 		Elements["ROBBER_PIT_LEFT"],
