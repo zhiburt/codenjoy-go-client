@@ -155,11 +155,29 @@ func (b *Board) FindPotions() []*engine.Point {
 	return b.board.Find(Elements["MASK_POTION"])
 }
 
+func (b *Board) FindDoors() []*engine.Point {
+	return b.board.Find(
+		Elements["OPENED_DOOR_GOLD"],
+		Elements["OPENED_DOOR_SILVER"],
+		Elements["OPENED_DOOR_BRONZE"],
+		Elements["CLOSED_DOOR_GOLD"],
+		Elements["CLOSED_DOOR_SILVER"],
+		Elements["CLOSED_DOOR_BRONZE"])
+}
+
+func (b *Board) FindKeys() []*engine.Point {
+	return b.board.Find(
+		Elements["KEY_GOLD"],
+		Elements["KEY_SILVER"],
+		Elements["KEY_BRONZE"])
+}
+
 func (b *Board) String() string {
 	return b.board.String() +
 		"\nHero at: " + b.FindHero().String() +
 		"\nOther heroes at: " + fmt.Sprintf("%v", b.FindOtherHeroes()) +
 		"\nEnemy heroes at: " + fmt.Sprintf("%v", b.FindEnemyHeroes()) +
 		"\nRobbers at: " + fmt.Sprintf("%v", b.FindRobbers()) +
-		"\nMask potions at: " + fmt.Sprintf("%v", b.FindPotions())
+		"\nMask potions at: " + fmt.Sprintf("%v", b.FindPotions()) +
+		"\nKeys at: " + fmt.Sprintf("%v", b.FindKeys())
 }
