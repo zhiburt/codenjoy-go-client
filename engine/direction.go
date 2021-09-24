@@ -3,42 +3,42 @@ package engine
 import "fmt"
 
 type Direction struct {
-	name  string
-	value int
-	dx    int
-	dy    int
+    name  string
+    value int
+    dx    int
+    dy    int
 }
 
 func (d *Direction) Value() int {
-	return d.value
+    return d.value
 }
 
 func (d *Direction) ChangeX(x int) int {
-	return x + d.dx
+    return x + d.dx
 }
 
 func (d *Direction) ChangeY(y int) int {
-	return y + d.dy
+    return y + d.dy
 }
 
 func (d *Direction) Inverted() Direction {
-	if d.name == "LEFT" {
-		return RIGHT
-	}
-	if d.name == "RIGHT" {
-		return LEFT
-	}
-	if d.name == "UP" {
-		return DOWN
-	}
-	if d.name == "DOWN" {
-		return UP
-	}
-	panic(fmt.Sprintf("Cant invert for: %v", d))
+    if d.name == "LEFT" {
+        return RIGHT
+    }
+    if d.name == "RIGHT" {
+        return LEFT
+    }
+    if d.name == "UP" {
+        return DOWN
+    }
+    if d.name == "DOWN" {
+        return UP
+    }
+    panic(fmt.Sprintf("Cant invert for: %v", d))
 }
 
 func (d *Direction) String() string {
-	return d.name
+    return d.name
 }
 
 var LEFT = Direction{"LEFT", 0, -1, 0}

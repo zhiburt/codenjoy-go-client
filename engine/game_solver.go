@@ -1,5 +1,5 @@
 package engine
 
 type Solver interface {
-	Answer(message string) string
+    Answer(message string) string
 }
