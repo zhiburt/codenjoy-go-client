@@ -46,7 +46,7 @@ func TestFindOtherHeroes(t *testing.T) {
 }
 
 func TestFindEnemyHeroes(t *testing.T) {
-    board := mollymage.NewBoard("#♡#" + "#♤#" + "#♧#")
+    board := mollymage.NewBoard("#ö#" + "#Ö#" + "#ø#")
     assert.Equal(t, "[[1,0] [1,1] [1,2]]", fmt.Sprintf("%v", board.FindEnemyHeroes()))
 }
 
@@ -94,7 +94,7 @@ func TestReport(t *testing.T) {
         "☼#2  &  ☼" +
         "☼# 3 ♣ ♠☼" +
         "☼☺  4   ☼" +
-        "☼   ♡ H☻☼" +
+        "☼   ö H☻☼" +
         "☼x H ҉҉҉☼" +
         "☼& &    ☼" +
         "☼☼☼☼☼☼☼☼☼")
@@ -103,7 +103,7 @@ func TestReport(t *testing.T) {
         "☼#2  &  ☼\n"+
         "☼# 3 ♣ ♠☼\n"+
         "☼☺  4   ☼\n"+
-        "☼   ♡ H☻☼\n"+
+        "☼   ö H☻☼\n"+
         "☼x H ҉҉҉☼\n"+
         "☼& &    ☼\n"+
         "☼☼☼☼☼☼☼☼☼\n"+
