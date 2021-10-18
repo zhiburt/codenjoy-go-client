@@ -1,2 +1,2 @@
-.idea/
-*.iml
+.golang
+.tools/*.zip
