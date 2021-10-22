@@ -1,7 +1,7 @@
 call 0-settings.bat
 
 echo off
-call lib.bat :color Installing Go...
+call lib.bat :color Installing go...
 echo on
 
 if "%SKIP_GO_INSTALL%"=="true" ( goto :skip )
