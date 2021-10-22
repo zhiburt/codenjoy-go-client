@@ -1,5 +1,5 @@
 echo off
-call lib.bat :color Setup variables...
+call lib :color Setup variables...
 echo on
 
 if "%GAME_TO_RUN%"=="" ( set GAME_TO_RUN=mollymage)
@@ -23,7 +23,7 @@ if "%GOPATH%"=="" ( set GOPATH=%ROOT%\.golang)
 set GO=%GOPATH%\bin\go
 
 echo off
-call lib.bat :color GOPATH=%GOPATH%
+call lib :color GOPATH=%GOPATH%
 echo on
 
 set ARCH_URL=https://golang.org/dl/go1.16.5.windows-amd64.zip
