@@ -22,6 +22,12 @@ goto :eof
     pause >nul
     goto :eof
 
+:sep
+    echo off
+    call :color ---------------------------------------------------------------------------------------
+    echo on
+    goto :eof
+
 :install
     cd %ROOT%
     set DEST=%~1
