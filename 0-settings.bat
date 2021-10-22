@@ -1,3 +1,7 @@
+echo off
+call lib.bat :color Setup variables...
+echo on
+
 if "%GAME_TO_RUN%"=="" ( set GAME_TO_RUN=mollymage)
 if "%BOARD_URL%"==""   ( set BOARD_URL=http://127.0.0.1:8080/codenjoy-contest/board/player/0?code=000000000000)
 
@@ -19,10 +23,10 @@ if "%GOPATH%"=="" ( set GOPATH=%ROOT%\.golang)
 set GO=%GOPATH%\bin\go
 
 echo off
-echo        [44;93mGOPATH=%GOPATH%[0m
+call lib.bat :color GOPATH=%GOPATH%
 echo on
 
-set ARCH_GO=https://golang.org/dl/go1.16.5.windows-amd64.zip
-set ARCH_GO_FOLDER=go
+set ARCH_URL=https://golang.org/dl/go1.16.5.windows-amd64.zip
+set ARCH_FOLDER=go
 
 set GO_CLIENT_HOME=%ROOT%
