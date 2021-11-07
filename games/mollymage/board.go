@@ -51,11 +51,12 @@ func (b *Board) GetAt(pt *engine.Point) rune {
 }
 
 func (b *Board) FindHero() *engine.Point {
-    points := b.board.Find(Elements["HERO"],
+    points := b.board.Find(
+        Elements["HERO"],
         Elements["POTION_HERO"],
         Elements["DEAD_HERO"])
     if len(points) == 0 {
-        panic("hero element has not been found")
+        panic("Hero element has not been found")
     }
     return points[0]
 }
@@ -65,13 +66,15 @@ func (b *Board) IsGameOver() bool {
 }
 
 func (b *Board) FindOtherHeroes() []*engine.Point {
-    return b.board.Find(Elements["OTHER_HERO"],
+    return b.board.Find(
+        Elements["OTHER_HERO"],
         Elements["OTHER_POTION_HERO"],
         Elements["OTHER_DEAD_HERO"])
 }
 
 func (b *Board) FindEnemyHeroes() []*engine.Point {
-    return b.board.Find(Elements["ENEMY_HERO"],
+    return b.board.Find(
+        Elements["ENEMY_HERO"],
         Elements["ENEMY_POTION_HERO"],
         Elements["ENEMY_DEAD_HERO"])
 }
@@ -117,7 +120,8 @@ func (b *Board) FindTreasureBoxes() []*engine.Point {
 }
 
 func (b *Board) FindPotions() []*engine.Point {
-    return b.board.Find(Elements["POTION_TIMER_1"],
+    return b.board.Find(
+        Elements["POTION_TIMER_1"],
         Elements["POTION_TIMER_2"],
         Elements["POTION_TIMER_3"],
         Elements["POTION_TIMER_4"],
@@ -169,7 +173,8 @@ func (b *Board) PredictBlastsForOneSide(pt *engine.Point, nextStep Move) []*engi
 }
 
 func (b *Board) FindPerks() []*engine.Point {
-    return b.board.Find(Elements["POTION_COUNT_INCREASE"],
+    return b.board.Find(
+        Elements["POTION_COUNT_INCREASE"],
         Elements["POTION_REMOTE_CONTROL"],
         Elements["POTION_IMMUNE"],
         Elements["POTION_BLAST_RADIUS_INCREASE"],
