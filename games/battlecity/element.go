@@ -221,5 +221,6 @@ var Elements = map[string]rune{
         // A prize that allows the hero to temporarily not slide on the
         // ice.
 
-    "PRIZE_NO_SLIDING": '5'
+    "PRIZE_NO_SLIDING": '5',
+
 }

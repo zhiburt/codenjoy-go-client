@@ -70,5 +70,6 @@ var Elements = map[string]rune{
 
         // Цифра 9.
 
-    "NINE": '9'
+    "NINE": '9',
+
 }

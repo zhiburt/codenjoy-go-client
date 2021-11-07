@@ -54,5 +54,6 @@ var Elements = map[string]rune{
 
         // Bomb planted by the hero. You can blow up on it.
 
-    "BOMB": 'x'
+    "BOMB": 'x',
+
 }

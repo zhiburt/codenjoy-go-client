@@ -42,5 +42,6 @@ var Elements = map[string]rune{
 
         // Твой погиб.
 
-    "BLACK_HERO": '☻'
+    "BLACK_HERO": '☻',
+
 }

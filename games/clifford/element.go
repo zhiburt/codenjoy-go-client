@@ -338,5 +338,6 @@ var Elements = map[string]rune{
         // Disguise potion - endow the hero with additional abilities.
         // The hero goes into shadow mode.
 
-    "MASK_POTION": 'S'
+    "MASK_POTION": 'S',
+
 }

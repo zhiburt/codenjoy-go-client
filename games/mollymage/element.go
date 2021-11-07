@@ -148,5 +148,6 @@ var Elements = map[string]rune{
         // Enemy hero corpse (it will disappear shortly, right on the
         // next move). If you've done it you'll get score points.
 
-    "ENEMY_DEAD_HERO": 'ø'
+    "ENEMY_DEAD_HERO": 'ø',
+
 }

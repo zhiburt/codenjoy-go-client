@@ -54,5 +54,6 @@ var Elements = map[string]rune{
 
         // Empty space.
 
-    "NONE": '.'
+    "NONE": '.',
+
 }

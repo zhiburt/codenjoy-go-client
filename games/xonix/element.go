@@ -65,5 +65,6 @@ var Elements = map[string]rune{
 
         // Сухопутный враг.
 
-    "LAND_ENEMY": 'L'
+    "LAND_ENEMY": 'L',
+
 }

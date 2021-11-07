@@ -66,5 +66,6 @@ var Elements = map[string]rune{
 
         // Пуля.
 
-    "BULLET": '*'
+    "BULLET": '*',
+
 }

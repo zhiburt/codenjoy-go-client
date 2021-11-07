@@ -46,5 +46,6 @@ var Elements = map[string]rune{
 
         // Field includes box overlapped mark.
 
-    "BOX_ON_THE_MARK": '*'
+    "BOX_ON_THE_MARK": '*',
+
 }

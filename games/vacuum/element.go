@@ -127,5 +127,6 @@ var Elements = map[string]rune{
         // повернет робота налево или вниз соответственно. После
         // проезда карусель поворачиваются по часовой стрелке.
 
-    "ROUNDABOUT_DOWN_LEFT": '┐'
+    "ROUNDABOUT_DOWN_LEFT": '┐',
+
 }
