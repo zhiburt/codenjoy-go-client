@@ -4,6 +4,7 @@ import (
     "github.com/codenjoyme/codenjoy-go-client/engine"
     "github.com/codenjoyme/codenjoy-go-client/games/clifford"
     "github.com/codenjoyme/codenjoy-go-client/games/mollymage"
+    "github.com/codenjoyme/codenjoy-go-client/games/sample"
     "os"
 )
 
@@ -21,6 +22,8 @@ func main() {
 
 func determineGameSolver(game string) engine.Solver {
     switch game {
+    case "sample":
+        return sample.NewSolver()
     case "mollymage":
         return mollymage.NewSolver()
     case "clifford":
