@@ -24,7 +24,7 @@ package startandjump
 
 var Elements = map[string]rune{
 
-        // Пустое поле.
+        // Пустое место – по которому может двигаться герой.
 
     "NONE": ' ',
 
