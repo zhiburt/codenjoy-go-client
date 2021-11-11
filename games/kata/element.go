@@ -1,4 +1,4 @@
-package lunolet
+package kata
 
 /*-
  * #%L

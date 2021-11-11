@@ -1,4 +1,4 @@
-package lunolet
+package sampletext
 
 /*-
  * #%L
