@@ -1,4 +1,4 @@
-package sample
+package mollymage
 
 /*-
  * #%L
@@ -22,37 +22,17 @@ package sample
  * #L%
  */
 
-var elements = map[string]rune{
+import (
+	"github.com/stretchr/testify/assert"
+	"testing"
+)
 
-	// Empty place where the hero can go.
-
-	"NONE": ' ',
-
-	// Wall you cant walk through.
-
-	"WALL": '☼',
-
-	// Your hero.
-
-	"HERO": '☺',
-
-	// Heroes of other players.
-
-	"OTHER_HERO": '☻',
-
-	// Your hero died. His body will disappear in the next tick.
-
-	"DEAD_HERO": 'X',
-
-	// Another player's hero died.
-
-	"OTHER_DEAD_HERO": 'Y',
-
-	// Gold. It must be picked up.
-
-	"GOLD": '$',
-
-	// Bomb planted by the hero. You can blow up on it.
-
-	"BOMB": 'x',
+func TestAnswer(t *testing.T) {
+	message := "board=" +
+		"☼☼☼☼☼" +
+		"☼   ☼" +
+		"☼ ☺ ☼" +
+		"☼   ☼" +
+		"☼☼☼☼☼"
+	assert.Equal(t, "ACT", NewSolver().Answer(message))
 }

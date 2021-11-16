@@ -1,4 +1,4 @@
-package sample
+package engine
 
 /*-
  * #%L
@@ -23,17 +23,22 @@ package sample
  */
 
 import (
-    "github.com/codenjoyme/codenjoy-go-client/games/sample"
-    "github.com/stretchr/testify/assert"
-    "testing"
+	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
-func TestAnswer(t *testing.T) {
-    message := "board=" +
-        "☼☼☼☼☼" +
-        "☼   ☼" +
-        "☼ ☺ ☼" +
-        "☼   ☼" +
-        "☼☼☼☼☼"
-    assert.Equal(t, "ACT", sample.NewSolver().Answer(message))
+func TestPointsIsValid(t *testing.T) {
+	t.Run("valid points", func(t *testing.T) {
+		assert.Equal(t, true, newPoint(0, 0).IsValid(10))
+		assert.Equal(t, true, newPoint(5, 5).IsValid(10))
+		assert.Equal(t, true, newPoint(9, 9).IsValid(10))
+		assert.Equal(t, true, newPoint(0, 9).IsValid(10))
+		assert.Equal(t, true, newPoint(9, 0).IsValid(10))
+	})
+	t.Run("invalid points", func(t *testing.T) {
+		assert.Equal(t, false, newPoint(-1, 9).IsValid(10))
+		assert.Equal(t, false, newPoint(9, -1).IsValid(10))
+		assert.Equal(t, false, newPoint(11, 9).IsValid(10))
+		assert.Equal(t, false, newPoint(9, 11).IsValid(10))
+	})
 }
