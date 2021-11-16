@@ -30,7 +30,7 @@ type Point struct {
 	x, y int
 }
 
-func newPoint(x int, y int) *Point {
+func NewPoint(x int, y int) *Point {
 	return &Point{x, y}
 }
 
@@ -51,19 +51,19 @@ func (p *Point) String() string {
 }
 
 func StepRight(pt *Point) *Point {
-	return newPoint(pt.X()+1, pt.Y())
+	return NewPoint(pt.X()+1, pt.Y())
 }
 
 func StepLeft(pt *Point) *Point {
-	return newPoint(pt.X()-1, pt.Y())
+	return NewPoint(pt.X()-1, pt.Y())
 }
 
 func StepUp(pt *Point) *Point {
-	return newPoint(pt.X(), pt.Y()+1)
+	return NewPoint(pt.X(), pt.Y()+1)
 }
 
 func StepDown(pt *Point) *Point {
-	return newPoint(pt.X(), pt.Y()-1)
+	return NewPoint(pt.X(), pt.Y()-1)
 }
 
 type SortedPoints []*Point

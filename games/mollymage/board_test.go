@@ -24,14 +24,15 @@ package mollymage
 
 import (
 	"fmt"
+	"github.com/codenjoyme/codenjoy-go-client/engine"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
-//func TestGetAtInvalidPoint(t *testing.T) {
-//    board := newBoard("###" + "###" + "###")
-//    assert.Equal(t, elements["WALL"], board.getAt(engine.NewPoint(-1, -1)))
-//}
+func TestGetAtInvalidPoint(t *testing.T) {
+	board := newBoard("###" + "###" + "###")
+	assert.Equal(t, elements["WALL"], board.getAt(engine.NewPoint(-1, -1)))
+}
 
 func TestFindHero(t *testing.T) {
 	board := newBoard("#☺#" + "###" + "###")

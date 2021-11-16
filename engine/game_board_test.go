@@ -58,20 +58,20 @@ func TestGetSize(t *testing.T) {
 
 func TestGetAt(t *testing.T) {
 	board := NewGameBoard([]rune{'a', 'b', 'c'}, "aaa"+"bbb"+"ccc")
-	assert.Equal(t, 'c', board.GetAt(newPoint(0, 0)))
-	assert.Equal(t, 'c', board.GetAt(newPoint(1, 0)))
-	assert.Equal(t, 'c', board.GetAt(newPoint(2, 0)))
-	assert.Equal(t, 'b', board.GetAt(newPoint(0, 1)))
-	assert.Equal(t, 'b', board.GetAt(newPoint(1, 1)))
-	assert.Equal(t, 'b', board.GetAt(newPoint(2, 1)))
-	assert.Equal(t, 'a', board.GetAt(newPoint(0, 2)))
-	assert.Equal(t, 'a', board.GetAt(newPoint(1, 2)))
-	assert.Equal(t, 'a', board.GetAt(newPoint(2, 2)))
+	assert.Equal(t, 'c', board.GetAt(NewPoint(0, 0)))
+	assert.Equal(t, 'c', board.GetAt(NewPoint(1, 0)))
+	assert.Equal(t, 'c', board.GetAt(NewPoint(2, 0)))
+	assert.Equal(t, 'b', board.GetAt(NewPoint(0, 1)))
+	assert.Equal(t, 'b', board.GetAt(NewPoint(1, 1)))
+	assert.Equal(t, 'b', board.GetAt(NewPoint(2, 1)))
+	assert.Equal(t, 'a', board.GetAt(NewPoint(0, 2)))
+	assert.Equal(t, 'a', board.GetAt(NewPoint(1, 2)))
+	assert.Equal(t, 'a', board.GetAt(NewPoint(2, 2)))
 }
 
 func TestGetAtInvalidPoint(t *testing.T) {
 	board := NewGameBoard([]rune{'a', 'b', 'c'}, "aaa"+"bbb"+"ccc")
-	assert.Panics(t, func() { board.GetAt(newPoint(10, 10)) })
+	assert.Panics(t, func() { board.GetAt(NewPoint(10, 10)) })
 }
 
 func TestFind(t *testing.T) {
@@ -101,56 +101,56 @@ func TestFindFirstNotExistedElement(t *testing.T) {
 
 func TestIsAt(t *testing.T) {
 	board := NewGameBoard([]rune{'a', 'b', 'c'}, "aaa"+"bbb"+"ccc")
-	assert.Equal(t, true, board.IsAt(newPoint(1, 2), 'a'))
-	assert.Equal(t, false, board.IsAt(newPoint(1, 2), 'b'))
-	assert.Equal(t, false, board.IsAt(newPoint(1, 2), 'c'))
+	assert.Equal(t, true, board.IsAt(NewPoint(1, 2), 'a'))
+	assert.Equal(t, false, board.IsAt(NewPoint(1, 2), 'b'))
+	assert.Equal(t, false, board.IsAt(NewPoint(1, 2), 'c'))
 }
 
 func TestIsAtInvalidPoint(t *testing.T) {
 	board := NewGameBoard([]rune{'a', 'b', 'c'}, "aaa"+"bbb"+"ccc")
-	assert.Equal(t, false, board.IsAt(newPoint(10, 10), 'b'))
+	assert.Equal(t, false, board.IsAt(NewPoint(10, 10), 'b'))
 }
 
 func TestFindNear(t *testing.T) {
 	board := NewGameBoard([]rune{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'}, "abc"+"def"+"ghi")
-	assert.Equal(t, []rune{'f', 'd', 'b', 'h'}, board.FindNear(newPoint(1, 1)))
+	assert.Equal(t, []rune{'f', 'd', 'b', 'h'}, board.FindNear(NewPoint(1, 1)))
 }
 
 func TestFindNearInvalidPoint(t *testing.T) {
 	board := NewGameBoard([]rune{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'}, "abc"+"def"+"ghi")
-	assert.Equal(t, []rune(nil), board.FindNear(newPoint(-1, -1)))
+	assert.Equal(t, []rune(nil), board.FindNear(NewPoint(-1, -1)))
 }
 
 func TestCountNear(t *testing.T) {
 	board := NewGameBoard([]rune{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'}, "abc"+"def"+"ghi")
-	assert.Equal(t, 2, board.CountNear(newPoint(1, 1), 'a', 'b', 'c', 'd'))
+	assert.Equal(t, 2, board.CountNear(NewPoint(1, 1), 'a', 'b', 'c', 'd'))
 }
 
 func TestCountNearInvalidPoint(t *testing.T) {
 	board := NewGameBoard([]rune{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'}, "abc"+"def"+"ghi")
-	assert.Equal(t, 0, board.CountNear(newPoint(-1, -1), 'a', 'b', 'c', 'd'))
+	assert.Equal(t, 0, board.CountNear(NewPoint(-1, -1), 'a', 'b', 'c', 'd'))
 }
 
 func TestCountNearNotExistedElement(t *testing.T) {
 	board := NewGameBoard([]rune{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'}, "abc"+"def"+"ghi")
-	assert.Equal(t, 0, board.CountNear(newPoint(1, 1), 'r'))
-	assert.Equal(t, 0, board.CountNear(newPoint(1, 1), 'x', 'y', 'z'))
+	assert.Equal(t, 0, board.CountNear(NewPoint(1, 1), 'r'))
+	assert.Equal(t, 0, board.CountNear(NewPoint(1, 1), 'x', 'y', 'z'))
 }
 
 func TestIsNear(t *testing.T) {
 	board := NewGameBoard([]rune{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'}, "abc"+"def"+"ghi")
-	assert.Equal(t, false, board.IsNear(newPoint(1, 1), 'a'))
-	assert.Equal(t, true, board.IsNear(newPoint(1, 1), 'b'))
-	assert.Equal(t, true, board.IsNear(newPoint(1, 1), 'c', 'd'))
+	assert.Equal(t, false, board.IsNear(NewPoint(1, 1), 'a'))
+	assert.Equal(t, true, board.IsNear(NewPoint(1, 1), 'b'))
+	assert.Equal(t, true, board.IsNear(NewPoint(1, 1), 'c', 'd'))
 }
 
 func TestIsNearInvalidPoint(t *testing.T) {
 	board := NewGameBoard([]rune{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'}, "abc"+"def"+"ghi")
-	assert.Equal(t, false, board.IsNear(newPoint(-1, -1), 'a'))
+	assert.Equal(t, false, board.IsNear(NewPoint(-1, -1), 'a'))
 }
 
 func TestIsNearNotExistedElement(t *testing.T) {
 	board := NewGameBoard([]rune{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'}, "abc"+"def"+"ghi")
-	assert.Equal(t, false, board.IsNear(newPoint(1, 1), 'r'))
-	assert.Equal(t, false, board.IsNear(newPoint(1, 1), 'x', 'y', 'z'))
+	assert.Equal(t, false, board.IsNear(NewPoint(1, 1), 'r'))
+	assert.Equal(t, false, board.IsNear(NewPoint(1, 1), 'x', 'y', 'z'))
 }

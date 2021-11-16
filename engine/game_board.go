@@ -111,19 +111,19 @@ func (b *GameBoard) IsAt(pt *Point, wanted ...rune) bool {
 func (b *GameBoard) FindNear(pt *Point) []rune {
 	var elements []rune
 
-	right := newPoint(pt.X()+1, pt.Y())
+	right := NewPoint(pt.X()+1, pt.Y())
 	if right.IsValid(b.size) {
 		elements = append(elements, b.GetAt(right))
 	}
-	left := newPoint(pt.X()-1, pt.Y())
+	left := NewPoint(pt.X()-1, pt.Y())
 	if left.IsValid(b.size) {
 		elements = append(elements, b.GetAt(left))
 	}
-	up := newPoint(pt.X(), pt.Y()+1)
+	up := NewPoint(pt.X(), pt.Y()+1)
 	if up.IsValid(b.size) {
 		elements = append(elements, b.GetAt(up))
 	}
-	down := newPoint(pt.X(), pt.Y()-1)
+	down := NewPoint(pt.X(), pt.Y()-1)
 	if down.IsValid(b.size) {
 		elements = append(elements, b.GetAt(down))
 	}
@@ -159,7 +159,7 @@ func (b *GameBoard) pointToIndex(x int, y int) int {
 func (b *GameBoard) indexToPoint(index int) *Point {
 	x := index % b.size
 	y := int(math.Ceil(float64(b.size - 1 - index/b.size)))
-	return newPoint(x, y)
+	return NewPoint(x, y)
 }
 
 func (b *GameBoard) String() string {
