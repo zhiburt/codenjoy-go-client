@@ -32,7 +32,7 @@ func TestAnswer(t *testing.T) {
     message := "board=" +
         "☼☼☼☼☼" +
         "☼   ☼" +
-        "☼ ⊳ ☼" +
+        "☼ ► ☼" +
         "☼   ☼" +
         "☼☼☼☼☼"
     assert.Equal(t, "ACT", clifford.NewSolver().Answer(message))

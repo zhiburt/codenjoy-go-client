@@ -30,129 +30,130 @@ import (
 )
 
 func TestIsGameOver(t *testing.T) {
-    board := clifford.NewBoard("###" + "##►" + "###")
+    board := clifford.NewBoard("#####►###")
     assert.Equal(t, false, board.IsGameOver())
 
-    board = clifford.NewBoard("###" + "Ѡ##" + "###")
+    board = clifford.NewBoard("###O#####")
     assert.Equal(t, true, board.IsGameOver())
-    board = clifford.NewBoard("###" + "x##" + "###")
+
+    board = clifford.NewBoard("###o#####")
     assert.Equal(t, true, board.IsGameOver())
 }
 
 func TestFindHeroNoResult(t *testing.T) {
-    board := clifford.NewBoard("###" + "###" + "###")
+    board := clifford.NewBoard("#########")
     assert.Panics(t, func() { fmt.Sprintf("%v", board.FindHero()) })
 }
 
 func TestFindHero(t *testing.T) {
-    board := clifford.NewBoard("Ѡ##" + "###" + "###")
+    board := clifford.NewBoard("O########")
     assert.Equal(t, "[0,2]", fmt.Sprintf("%v", board.FindHero()))
 
-    board = clifford.NewBoard("###" + "Y##" + "###")
+    board = clifford.NewBoard("###A#####")
     assert.Equal(t, "[0,1]", fmt.Sprintf("%v", board.FindHero()))
 
-    board = clifford.NewBoard("###" + "#◄#" + "###")
+    board = clifford.NewBoard("####◄####")
     assert.Equal(t, "[1,1]", fmt.Sprintf("%v", board.FindHero()))
 
-    board = clifford.NewBoard("###" + "##►" + "###")
+    board = clifford.NewBoard("#####►###")
     assert.Equal(t, "[2,1]", fmt.Sprintf("%v", board.FindHero()))
 
-    board = clifford.NewBoard("###" + "###" + "]##")
+    board = clifford.NewBoard("######U##")
     assert.Equal(t, "[0,0]", fmt.Sprintf("%v", board.FindHero()))
 
-    board = clifford.NewBoard("###" + "###" + "##{")
+    board = clifford.NewBoard("########I")
     assert.Equal(t, "[2,0]", fmt.Sprintf("%v", board.FindHero()))
 
-    board = clifford.NewBoard("###" + "###" + "##⍃")
+    board = clifford.NewBoard("########E")
     assert.Equal(t, "[2,0]", fmt.Sprintf("%v", board.FindHero()))
 
-    board = clifford.NewBoard("⍃Ѡ " + "Y◄►" + "]{ ")
+    board = clifford.NewBoard("EO A◄►UI ")
     assert.Equal(t, "[0,0]", fmt.Sprintf("%v", board.FindHero()))
 }
 
 func TestFindHero_Mask(t *testing.T) {
-    board := clifford.NewBoard("x##" + "###" + "###")
+    board := clifford.NewBoard("o########")
     assert.Equal(t, "[0,2]", fmt.Sprintf("%v", board.FindHero()))
 
-    board = clifford.NewBoard("###" + "⍬##" + "###")
+    board = clifford.NewBoard("###a#####")
     assert.Equal(t, "[0,1]", fmt.Sprintf("%v", board.FindHero()))
 
-    board = clifford.NewBoard("###" + "#⊲#" + "###")
+    board = clifford.NewBoard("####h####")
     assert.Equal(t, "[1,1]", fmt.Sprintf("%v", board.FindHero()))
 
-    board = clifford.NewBoard("###" + "##⊳" + "###")
+    board = clifford.NewBoard("#####w###")
     assert.Equal(t, "[2,1]", fmt.Sprintf("%v", board.FindHero()))
 
-    board = clifford.NewBoard("###" + "###" + "⊅##")
+    board = clifford.NewBoard("######u##")
     assert.Equal(t, "[0,0]", fmt.Sprintf("%v", board.FindHero()))
 
-    board = clifford.NewBoard("###" + "###" + "##⋜")
+    board = clifford.NewBoard("########i")
     assert.Equal(t, "[2,0]", fmt.Sprintf("%v", board.FindHero()))
 
-    board = clifford.NewBoard("###" + "###" + "##ᐊ")
+    board = clifford.NewBoard("########e")
     assert.Equal(t, "[2,0]", fmt.Sprintf("%v", board.FindHero()))
 
-    board = clifford.NewBoard("ᐊx " + "⍬⊲⊳" + "⊅⋜ ")
+    board = clifford.NewBoard("eo awhui ")
     assert.Equal(t, "[0,0]", fmt.Sprintf("%v", board.FindHero()))
 }
 
 func TestFindOtherHeroes(t *testing.T) {
-    board := clifford.NewBoard("Z( " + "U) " + "ᗉЭ⊐")
+    board := clifford.NewBoard("C» D« KJF")
     assert.Equal(t, "[[0,0] [0,1] [0,2] [1,0] [1,1] [1,2] [2,0]]",
         fmt.Sprintf("%v", board.FindOtherHeroes()))
 
-    board = clifford.NewBoard("⋈⋣ " + "⋊⋉ " + "⊣ᗏ⋕")
+    board = clifford.NewBoard("cz dZ kjf")
     assert.Equal(t, "[[0,0] [0,1] [0,2] [1,0] [1,1] [1,2] [2,0]]",
         fmt.Sprintf("%v", board.FindOtherHeroes()))
 }
 func TestFindEnemyHeroes(t *testing.T) {
-    board := clifford.NewBoard("Ž❪ " + "Ǔ❫ " + "⋥Ǯ⇇")
+    board := clifford.NewBoard("LP NQ RTV")
     assert.Equal(t, "[[0,0] [0,1] [0,2] [1,0] [1,1] [1,2] [2,0]]",
         fmt.Sprintf("%v", board.FindEnemyHeroes()))
 
-    board = clifford.NewBoard("⧓⬱ " + "≠⧒ " + "⌫❵⧑")
+    board = clifford.NewBoard("lp nq rtv")
     assert.Equal(t, "[[0,0] [0,1] [0,2] [1,0] [1,1] [1,2] [2,0]]",
         fmt.Sprintf("%v", board.FindEnemyHeroes()))
 }
 
 func TestFindRobbers(t *testing.T) {
-    board := clifford.NewBoard("Q« " + "‹< " + "»⍇ ")
+    board := clifford.NewBoard("X) xY (y ")
     assert.Equal(t, "[[0,0] [0,1] [0,2] [1,0] "+
         "[1,1] [1,2]]", fmt.Sprintf("%v", board.FindRobbers()))
 }
 
 func TestFindBarriers(t *testing.T) {
-    board := clifford.NewBoard("  #" + "  ☼" + "   ")
+    board := clifford.NewBoard("  #  ☼   ")
     assert.Equal(t, "[[2,1] [2,2]]", fmt.Sprintf("%v", board.FindBarriers()))
 }
 
 func TestFindPits(t *testing.T) {
-    board := clifford.NewBoard("123" + "4**" + "###")
+    board := clifford.NewBoard("1234**###")
     assert.Equal(t, "[[0,1] [0,2] [1,1] [1,2] [2,1] [2,2]]", fmt.Sprintf("%v", board.FindPits()))
 }
 
 func TestFindClues(t *testing.T) {
-    board := clifford.NewBoard("##$" + "##&" + "##@")
+    board := clifford.NewBoard("##$##&##@")
     assert.Equal(t, "[[2,0] [2,1] [2,2]]", fmt.Sprintf("%v", board.FindClues()))
 }
 
 func TestFindBackways(t *testing.T) {
-    board := clifford.NewBoard("##⊛" + "###" + "###")
+    board := clifford.NewBoard("##W######")
     assert.Equal(t, "[[2,2]]", fmt.Sprintf("%v", board.FindBackways()))
 }
 
 func TestFindPotions(t *testing.T) {
-    board := clifford.NewBoard("##S" + "###" + "###")
+    board := clifford.NewBoard("##m######")
     assert.Equal(t, "[[2,2]]", fmt.Sprintf("%v", board.FindPotions()))
 }
 
 func TestFindDoors(t *testing.T) {
-    board := clifford.NewBoard("⍙⍚⍜" + "⍍⌺⌼" + "###")
+    board := clifford.NewBoard("gsbGSB###")
     assert.Equal(t, "[[0,1] [0,2] [1,1] [1,2] [2,1] [2,2]]", fmt.Sprintf("%v", board.FindDoors()))
 }
 
 func TestFindKeys(t *testing.T) {
-    board := clifford.NewBoard("✦✼⍟" + "###" + "###")
+    board := clifford.NewBoard("+-!######")
     assert.Equal(t, "[[0,2] [1,2] [2,2]]", fmt.Sprintf("%v", board.FindKeys()))
 }
 
@@ -160,22 +161,22 @@ func TestReport(t *testing.T) {
     board := clifford.NewBoard("board=" +
         "☼☼☼☼☼☼☼☼☼" +
         "☼ ►*## $☼" +
-        "☼ H ⧒⧒ ✼☼" +
-        "☼ H  1 ⍍☼" +
-        "☼S   &  ☼" +
-        "☼ ✦ ~~~ ☼" +
-        "☼Z3 ⌺   ☼" +
-        "☼ @@  Q ☼" +
+        "☼ H pq -☼" +
+        "☼ H  1 G☼" +
+        "☼m   &  ☼" +
+        "☼ + ~~~ ☼" +
+        "☼Z3 S   ☼" +
+        "☼ @@  X ☼" +
         "☼☼☼☼☼☼☼☼☼")
     assert.Equal(t, ""+
         "☼☼☼☼☼☼☼☼☼\n" +
         "☼ ►*## $☼\n" +
-        "☼ H ⧒⧒ ✼☼\n" +
-        "☼ H  1 ⍍☼\n" +
-        "☼S   &  ☼\n" +
-        "☼ ✦ ~~~ ☼\n" +
-        "☼Z3 ⌺   ☼\n" +
-        "☼ @@  Q ☼\n" +
+        "☼ H pq -☼\n" +
+        "☼ H  1 G☼\n" +
+        "☼m   &  ☼\n" +
+        "☼ + ~~~ ☼\n" +
+        "☼Z3 S   ☼\n" +
+        "☼ @@  X ☼\n" +
         "☼☼☼☼☼☼☼☼☼\n"+
         "\n"+
         "Hero at: [2,7]\n"+
