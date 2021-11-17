@@ -45,5 +45,5 @@ func (Solver) Answer(message string) string {
 
 func nextAction(b *board) engine.Direction {
 	// TODO: write your code here
-	return engine.ACT
+	return engine.RIGHT
 }
