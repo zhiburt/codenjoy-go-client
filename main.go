@@ -10,7 +10,8 @@ import (
 
 func main() {
 	game := "mollymage"
-	url := "http://localhost:8080/codenjoy-contest/board/player/0?code=000000000000"
+	url := "http://127.0.0.1:8080/codenjoy-contest/board/player/0?code=000000000000"
+
 	if len(os.Args) == 3 {
 		game = os.Args[1]
 		url = os.Args[2]
