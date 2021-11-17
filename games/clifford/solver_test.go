@@ -1,4 +1,4 @@
-package sample
+package clifford
 
 /*-
  * #%L
@@ -23,17 +23,16 @@ package sample
  */
 
 import (
-    "github.com/codenjoyme/codenjoy-go-client/games/sample"
-    "github.com/stretchr/testify/assert"
-    "testing"
+	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func TestAnswer(t *testing.T) {
-    message := "board=" +
-        "☼☼☼☼☼" +
-        "☼   ☼" +
-        "☼ ☺ ☼" +
-        "☼   ☼" +
-        "☼☼☼☼☼"
-    assert.Equal(t, "ACT", sample.NewSolver().Answer(message))
+	message := "board=" +
+		"☼☼☼☼☼" +
+		"☼   ☼" +
+		"☼ ► ☼" +
+		"☼   ☼" +
+		"☼☼☼☼☼"
+	assert.Equal(t, "ACT", NewSolver().Answer(message))
 }

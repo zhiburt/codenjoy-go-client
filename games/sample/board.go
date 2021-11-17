@@ -23,93 +23,93 @@ package sample
  */
 
 import (
-    "fmt"
-    "github.com/codenjoyme/codenjoy-go-client/engine"
-    "reflect"
-    "sort"
+	"fmt"
+	"github.com/codenjoyme/codenjoy-go-client/engine"
+	"reflect"
+	"sort"
 )
 
-type Board struct {
-    board *engine.GameBoard
+type board struct {
+	board *engine.GameBoard
 }
 
-func NewBoard(message string) *Board {
-    ElementsValues := make([]rune, 0, len(Elements))
-    for _, e := range Elements {
-        ElementsValues = append(ElementsValues, e)
-    }
-    return &Board{engine.NewGameBoard(ElementsValues, message)}
+func newBoard(message string) *board {
+	values := make([]rune, 0, len(elements))
+	for _, e := range elements {
+		values = append(values, e)
+	}
+	return &board{engine.NewGameBoard(values, message)}
 }
 
-func (b *Board) GetAt(pt *engine.Point) rune {
-    if !pt.IsValid(b.board.GetSize()) {
-        return Elements["WALL"]
-    }
-    return b.board.GetAt(pt)
+func (b *board) getAt(pt *engine.Point) rune {
+	if !pt.IsValid(b.board.Size()) {
+		return elements["WALL"]
+	}
+	return b.board.GetAt(pt)
 }
 
-func (b *Board) FindHero() *engine.Point {
-    points := b.board.Find(
-        Elements["HERO"],
-        Elements["DEAD_HERO"])
+func (b *board) findHero() *engine.Point {
+	points := b.board.Find(
+		elements["HERO"],
+		elements["DEAD_HERO"])
 
-    if len(points) == 0 {
-        panic("Hero element has not been found")
-    }
-    return points[0]
+	if len(points) == 0 {
+		panic("Hero element has not been found")
+	}
+	return points[0]
 }
 
-func (b *Board) IsGameOver() bool {
-    return len(b.board.Find(Elements["DEAD_HERO"])) != 0
+func (b *board) isGameOver() bool {
+	return len(b.board.Find(elements["DEAD_HERO"])) != 0
 }
 
-func (b *Board) FindOtherHeroes() []*engine.Point {
-    return b.board.Find(
-        Elements["OTHER_HERO"],
-        Elements["OTHER_DEAD_HERO"])
+func (b *board) findOtherHeroes() []*engine.Point {
+	return b.board.Find(
+		elements["OTHER_HERO"],
+		elements["OTHER_DEAD_HERO"])
 }
 
-func (b *Board) FindBarriers() []*engine.Point {
-    var points []*engine.Point
-    points = appendIfMissing(points, b.FindWalls()...)
-    points = appendIfMissing(points, b.FindBombs()...)
-    points = appendIfMissing(points, b.FindOtherHeroes()...)
-    sort.Sort(engine.SortedPoints(points))
-    return points
+func (b *board) findBarriers() []*engine.Point {
+	var points []*engine.Point
+	points = appendIfMissing(points, b.findWalls()...)
+	points = appendIfMissing(points, b.findBombs()...)
+	points = appendIfMissing(points, b.findOtherHeroes()...)
+	sort.Sort(engine.SortedPoints(points))
+	return points
 }
 
 func appendIfMissing(slice []*engine.Point, points ...*engine.Point) []*engine.Point {
-    for _, p := range points {
-        existed := false
-        for _, ele := range slice {
-            if reflect.DeepEqual(ele, p) {
-                existed = true
-                break
-            }
-        }
-        if !existed {
-            slice = append(slice, p)
-        }
-    }
-    return slice
+	for _, p := range points {
+		existed := false
+		for _, ele := range slice {
+			if reflect.DeepEqual(ele, p) {
+				existed = true
+				break
+			}
+		}
+		if !existed {
+			slice = append(slice, p)
+		}
+	}
+	return slice
 }
 
-func (b *Board) FindWalls() []*engine.Point {
-    return b.board.Find(Elements["WALL"])
+func (b *board) findWalls() []*engine.Point {
+	return b.board.Find(elements["WALL"])
 }
 
-func (b *Board) FindBombs() []*engine.Point {
-    return b.board.Find(Elements["BOMB"])
+func (b *board) findBombs() []*engine.Point {
+	return b.board.Find(elements["BOMB"])
 }
 
-func (b *Board) FindGold() []*engine.Point {
-    return b.board.Find(Elements["GOLD"])
+func (b *board) findGold() []*engine.Point {
+	return b.board.Find(elements["GOLD"])
 }
 
-func (b *Board) String() string {
-    return b.board.String() +
-        "\nHero at: " + b.FindHero().String() +
-        "\nOther heroes at: " + fmt.Sprintf("%v", b.FindOtherHeroes()) +
-        "\nBombs at: " + fmt.Sprintf("%v", b.FindBombs()) +
-        "\nGold at: " + fmt.Sprintf("%v", b.FindGold())
+func (b *board) String() string {
+	return b.board.String() +
+		"\nHero at: " + b.findHero().String() +
+		"\nOther heroes at: " + fmt.Sprintf("%v", b.findOtherHeroes()) +
+		"\nBombs at: " + fmt.Sprintf("%v", b.findBombs()) +
+		"\nGold at: " + fmt.Sprintf("%v", b.findGold())
 }
