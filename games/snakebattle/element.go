@@ -22,7 +22,7 @@ package snakebattle
  * #L%
  */
 
-var Elements = map[string]rune{
+var elements = map[string]rune{
 
         // Empty space - space where the snake can move.
 

@@ -22,7 +22,7 @@ package a2048
  * #L%
  */
 
-var Elements = map[string]rune{
+var elements = map[string]rune{
 
         // An obstacle through which the chips do not pass.
 

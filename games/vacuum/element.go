@@ -22,7 +22,7 @@ package vacuum
  * #L%
  */
 
-var Elements = map[string]rune{
+var elements = map[string]rune{
 
         // Чистая клетка локации. Проезд облагается штрафом.
         // Эффективный пылесос должен меньше гулять по чистым местам и

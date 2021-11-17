@@ -22,7 +22,7 @@ package lunolet
  * #L%
  */
 
-var Elements = map[string]rune{
+var elements = map[string]rune{
 
         // There are no elements for this game.
 

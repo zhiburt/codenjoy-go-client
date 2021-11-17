@@ -22,7 +22,7 @@ package sudoku
  * #L%
  */
 
-var Elements = map[string]rune{
+var elements = map[string]rune{
 
         // Пустое место – циферку в котором предстоит отгадать.
 

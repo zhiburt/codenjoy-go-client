@@ -22,7 +22,7 @@ package lemonade
  * #L%
  */
 
-var Elements = map[string]rune{
+var elements = map[string]rune{
 
         // Sunny weather.
 

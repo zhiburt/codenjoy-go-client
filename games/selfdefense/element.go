@@ -22,7 +22,7 @@ package selfdefense
  * #L%
  */
 
-var Elements = map[string]rune{
+var elements = map[string]rune{
 
         // Пустое место в космосе. Сюда может переместиться корабль.
 

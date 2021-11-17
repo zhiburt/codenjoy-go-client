@@ -22,7 +22,7 @@ package quake2d
  * #L%
  */
 
-var Elements = map[string]rune{
+var elements = map[string]rune{
 
         // Пустое место – по которому может двигаться герой.
 

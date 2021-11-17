@@ -22,7 +22,7 @@ package japanese
  * #L%
  */
 
-var Elements = map[string]rune{
+var elements = map[string]rune{
 
         // Игрок утверждает, что пиксель белый.
 

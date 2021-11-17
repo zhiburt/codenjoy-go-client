@@ -22,7 +22,7 @@ package hex
  * #L%
  */
 
-var Elements = map[string]rune{
+var elements = map[string]rune{
 
         // Пустое поле на карте. Сюда можно перемещать свои войска.
 

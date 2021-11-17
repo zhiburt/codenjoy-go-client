@@ -22,7 +22,7 @@ package xonix
  * #L%
  */
 
-var Elements = map[string]rune{
+var elements = map[string]rune{
 
         // Море, где живут морские враги. Море нужно делать сушей.
 

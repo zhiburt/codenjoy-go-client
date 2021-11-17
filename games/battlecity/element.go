@@ -22,7 +22,7 @@ package battlecity
  * #L%
  */
 
-var Elements = map[string]rune{
+var elements = map[string]rune{
 
         // An empty space where a tank can move.
 

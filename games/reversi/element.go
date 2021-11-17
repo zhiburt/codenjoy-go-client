@@ -22,7 +22,7 @@ package reversi
  * #L%
  */
 
-var Elements = map[string]rune{
+var elements = map[string]rune{
 
         // Пустое место – на которое во время хода можно ставить свою
         // фишку (если будет что перевернуть).

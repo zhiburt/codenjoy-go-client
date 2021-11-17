@@ -22,7 +22,7 @@ package collapse
  * #L%
  */
 
-var Elements = map[string]rune{
+var elements = map[string]rune{
 
         // Пустое место – место которое заполнится фишкой в следующий
         // тик.

@@ -22,7 +22,7 @@ package icancode
  * #L%
  */
 
-var Elements = map[string]rune{
+var elements = map[string]rune{
 
     "EMPTY": '-',
 

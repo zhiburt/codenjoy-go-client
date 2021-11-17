@@ -22,7 +22,7 @@ package football
  * #L%
  */
 
-var Elements = map[string]rune{
+var elements = map[string]rune{
 
         // Пустое место, куда можно перейти игроку.
 

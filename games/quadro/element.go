@@ -22,7 +22,7 @@ package quadro
  * #L%
  */
 
-var Elements = map[string]rune{
+var elements = map[string]rune{
 
         // Пустое место на поле не занятое фишками.
 
