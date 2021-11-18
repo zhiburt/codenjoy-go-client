@@ -20,6 +20,7 @@ if "%INSTALL_LOCALLY%"=="" ( set INSTALL_LOCALLY=true)
 
 if "%INSTALL_LOCALLY%"=="true" ( set GOPATH=)
 if "%GOPATH%"=="" ( set GOPATH=%ROOT%\.golang)
+
 set GO=%GOPATH%\bin\go
 
 echo off
