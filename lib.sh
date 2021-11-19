@@ -40,8 +40,15 @@ eval_echo_color() {
 }
 
 ask() {
-    color 94 "Press any key to continue"
-    read -p ""
+    ask_message $COLOR2 "Press any key to continue"
+}
+
+ask_result=""
+ask_message() {
+    color=$1
+    message=$2
+    color $color "$message"
+    read ask_result
 }
 
 sep() {
