@@ -63,10 +63,14 @@ install() {
     eval_echo_color $COLOR3 "URL=$2"
     eval_echo_color $COLOR3 "FOLDER=$3"
 
-    if [[ "$URL" == *zip ]]; then
+    if [[ "$URL" == *.zip ]]; then
       eval_echo_color $COLOR3 "DEST_FILE=$1.zip"
-    else
+    elif [[ "$URL" == *.tar.xz ]]; then
+      eval_echo_color $COLOR3 "DEST_FILE=$1.tar.xz"
+    elif [[ "$URL" == *.tar.gz ]]; then
       eval_echo_color $COLOR3 "DEST_FILE=$1.tar.gz"
+    elif [[ "$URL" == *.tgz ]]; then
+      eval_echo_color $COLOR3 "DEST_FILE=$1.tgz"
     fi
 
     if test -f "$TOOLS/$DEST_FILE"; then
