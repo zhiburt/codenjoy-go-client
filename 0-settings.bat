@@ -20,11 +20,14 @@ if "%INSTALL_LOCALLY%"==""     ( set INSTALL_LOCALLY=true)
 
 if "%INSTALL_LOCALLY%"=="true" ( set GOPATH=)
 
-if "%GOPATH%"=="" ( set GOPATH=%ROOT%\.golang)
+if "%GOPATH%"==""     ( set NO_GO=true)
+if "%NO_GO%"=="true"  ( set GOPATH=%ROOT%\.golang)
+if "%NO_GO%"=="true"  ( set PATH=%GOPATH%\bin;%PATH%)
 
 set GO=%GOPATH%\bin\go
 
 echo off
+call lib :color PATH=%PATH%
 call lib :color GOPATH=%GOPATH%
 echo on
 

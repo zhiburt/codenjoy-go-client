@@ -16,15 +16,17 @@ eval_echo "TOOLS=$ROOT/.tools"
 eval_echo "ARCH=tar"
 
 # Set to true if you want to ignore go installation on the system
-eval_echo "[[ \"$INSTALL_LOCALLY\" == \"\" ]] && INSTALL_LOCALLY=true"
+eval_echo "[[ \"$INSTALL_LOCALLY\" == \"\" ]]   && INSTALL_LOCALLY=true"
 
 eval_echo "[[ \"$INSTALL_LOCALLY\" == "true" ]] && export GOPATH="
 
-eval_echo "[[ \"$GOPATH\" == \"\" ]]  && export GOPATH=$ROOT/.golang"
+eval_echo "[[ \"$GOPATH\" == \"\" ]]    && NO_GO=true"
+eval_echo "[[ \"$NO_GO\" == \"true\" ]] && export GOPATH=$ROOT/.golang"
+eval_echo "[[ \"$NO_GO\" == \"true\" ]] && export PATH=$GOPATH/bin:$PATH"
 
 eval_echo "GO=$GOPATH/bin/go"
-eval_echo "export PATH=\"$GOPATH/bin:$PATH\""
 
+color $COLOR4 "PATH=$PATH"
 color $COLOR4 "GOPATH=$GOPATH"
 echo
 
