@@ -18,9 +18,9 @@ eval_echo "ARCH=tar"
 # Set to true if you want to ignore jdk and maven installation on the system
 eval_echo "[[ \"$INSTALL_LOCALLY\" == \"\" ]] && INSTALL_LOCALLY=true"
 
-eval_echo "[[ \"$INSTALL_LOCALLY\" == "true" ]] && GOPATH="
+eval_echo "[[ \"$INSTALL_LOCALLY\" == "true" ]] && export GOPATH="
 
-eval_echo "[[ \"$GOPATH\" == \"\" ]]  && GOPATH=$ROOT/.golang"
+eval_echo "[[ \"$GOPATH\" == \"\" ]]  && export GOPATH=$ROOT/.golang"
 
 eval_echo "GO=$GOPATH/bin/go"
 eval_echo "export PATH=\"$GOPATH/bin:$PATH\""
