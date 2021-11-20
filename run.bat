@@ -32,8 +32,10 @@ set OPTION=%1
     goto :start
 
 :eval_echo
-    call :color "%CL_COMMAND%" "%~1%"
-    call %~1%
+    set input=%~1%
+    call set command=%%input:`="%%
+    call :color "%CL_COMMAND%" "%input%"
+    call %command%
 
     goto :eof
 
