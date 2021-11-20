@@ -35,7 +35,6 @@ set OPTION=%1
     call :color "%CL_COMMAND%" "%~1%"
     call %~1%
 
-
     goto :eof
 
 :ask_option
