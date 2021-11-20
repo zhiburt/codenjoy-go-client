@@ -151,8 +151,6 @@ set OPTION=%1
     set ARCH_URL=https://golang.org/dl/go1.16.5.windows-amd64.zip
     set ARCH_FOLDER=go
 
-    set GO_CLIENT_HOME=%ROOT%
-
     goto :eof
 
 :download
