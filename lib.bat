@@ -1,6 +1,15 @@
 call %*
 goto :eof
 
+:read_env
+    echo off
+    FOR /F "tokens=*" %%i in ('type .env') do (
+        SET %%i
+        call lib :color %%i
+    )
+    echo on
+    goto :eof
+
 :print_color
 	call %* > %TOOLS%\out
 	echo off

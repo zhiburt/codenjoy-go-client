@@ -2,8 +2,7 @@ echo off
 call lib :color Setup variables...
 echo on
 
-if "%GAME_TO_RUN%"=="" ( set GAME_TO_RUN=mollymage)
-if "%BOARD_URL%"==""   ( set BOARD_URL=http://127.0.0.1:8080/codenjoy-contest/board/player/0?code=000000000000)
+call lib :read_env
 
 set ROOT=%CD%
 
@@ -28,6 +27,7 @@ set GO=%GOPATH%\bin\go
 
 echo off
 call lib :color PATH=%PATH%
+echo.
 call lib :color GOPATH=%GOPATH%
 echo on
 
