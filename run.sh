@@ -109,7 +109,7 @@ echo
 color $CL_HEADER "Building client..."
 echo
 
-    eval_echo "docker build -t client-server -f Dockerfile ./ --build-arg SERVER_URL=$BOARD_URL --build-arg GAME_TO_RUN=$GAME_TO_RUN"
+    eval_echo "DOCKER_BUILDKIT=1 docker build -t client-server -f Dockerfile ./ --build-arg SERVER_URL=$BOARD_URL --build-arg GAME_TO_RUN=$GAME_TO_RUN"
 
 color $CL_HEADER "Starting client..."
 echo
