@@ -1,6 +1,77 @@
 #!/usr/bin/env bash
 
-. 0-settings.sh
+# red 91
+# green 92
+# yellow 93
+# blue 94
+# pink 95
+# light blue 96
+# purple 97
+COLOR1=92
+COLOR2=94
+COLOR3=96
+COLOR4=93
+
+eval_echo_color_output() {
+    command=$1
+    output=$($command)
+    color $COLOR2 "$command"
+    color $COLOR4 "$output"
+}
+
+color() {
+    color=$1
+    message=$2
+    echo "[${color}m$message[0m"
+}
+
+eval_echo() {
+    command=$1
+    eval_echo_color $COLOR2 "$command"
+}
+
+eval_echo_color() {
+    color=$1
+    command=$2
+    color $color "$command"
+    echo
+
+    eval $command
+}
+
+ask() {
+    ask_message $COLOR2 "Press any key to continue"
+}
+
+ask_result=""
+ask_message() {
+    color=$1
+    message=$2
+    color $color "$message"
+    read ask_result
+}
+
+sep() {
+    color $COLOR2 "---------------------------------------------------------------------------------------"
+}
+
+read_env() {
+    for entry in $(cat $ROOT/.env)
+    do
+        if [[ ! $entry == \#* ]]
+        then
+            export $entry
+            color $COLOR4 "$entry"
+        fi
+    done
+}
+
+color $COLOR1 "Setup variables..."
+echo
+
+    eval_echo "ROOT=$PWD"
+
+    read_env
 
 color $COLOR1 "Installing docker..."
 echo
@@ -38,7 +109,7 @@ echo
 color $COLOR1 "Building client..."
 echo
 
-    eval_echo "docker build -t client-server -f Dockerfile ./ --build-arg SERVER_URL=${BOARD_URL} --build-arg GAME_TO_RUN=${GAME_TO_RUN}"
+    eval_echo "docker build -t client-server -f Dockerfile ./ --build-arg SERVER_URL=$BOARD_URL --build-arg GAME_TO_RUN=$GAME_TO_RUN"
 
 color $COLOR1 "Starting client..."
 echo
