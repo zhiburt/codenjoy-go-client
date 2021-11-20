@@ -156,22 +156,12 @@ set OPTION=%1
 :download
     call :color "%CL_HEADER%" "Installing..."
 
-    if "%SKIP_GO_INSTALL%"=="true" ( goto :skip )
-    if "%INSTALL_LOCALLY%"=="false" ( goto :skip )
-    if "%INSTALL_LOCALLY%"=="" ( goto :skip )
-
-    call :install golang %ARCH_URL% %ARCH_FOLDER%
+    if     "%INSTALL_LOCALLY%"=="true" call :install golang %ARCH_URL% %ARCH_FOLDER%
+    if NOT "%INSTALL_LOCALLY%"=="true" call :color "%CL_INFO%" "The environment installed on the system is used"
 
     call :print_color %GO% version
 
     goto :eof
-
-:skip
-    echo Installation skipped
-    call :color "%CL_INFO%" "INSTALL_LOCALLY=%INSTALL_LOCALLY%"
-    call :color "%CL_INFO%" "SKIP_GO_INSTALL=%SKIP_GO_INSTALL%"
-
-    goto :restart
 
 :build
     call :color "%CL_HEADER%" "Building client..."
