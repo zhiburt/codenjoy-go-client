@@ -1,16 +1,20 @@
 @echo off
 
-rem commands
-set COLOR1=40;96
-
-rem questions
-set COLOR2=45;97
-
-rem important output
-set COLOR3=44;93
-
-rem headers
-set COLOR4=43;93
+rem red *;91
+rem green *;92
+rem yellow *;93
+rem blue *;94
+rem pink *;95
+rem light blue *;96
+rem purple *;97
+rem black background 40;*
+rem dark yellow background 43;*
+rem purple background 45;*
+rem blue background 44;*
+set CL_HEADER=43;93
+set CL_COMMAND=40;96
+set CL_QUESTION=45;97
+set CL_INFO=44;93
 
 call :settings
 
@@ -28,14 +32,14 @@ set OPTION=%1
     goto :start
 
 :eval_echo
-    call :color "%COLOR1%" "%~1%"
+    call :color "%CL_COMMAND%" "%~1%"
     call %~1%
 
 
     goto :eof
 
 :ask_option
-    call :color "%COLOR2%" "What would you like to do: [d]ownload env, [b]uild, [t]est, [r]un or [q]uit?"
+    call :color "%CL_QUESTION%" "What would you like to do: [d]ownload env, [b]uild, [t]est, [r]un or [q]uit?"
     set /p CODE=
     if "%CODE%"=="d" set OPTION=download
     if "%CODE%"=="b" set OPTION=build
@@ -49,16 +53,16 @@ set OPTION=%1
     echo Reading enviromnent from .env file
     FOR /F "tokens=*" %%i in ('type .env') do (
         SET %%i
-        call :color "%COLOR3%" "%%i"
+        call :color "%CL_INFO%" "%%i"
     )
 
     goto :eof
 
 :print_color
-	call :color "%COLOR1%" "%*"
+	call :color "%CL_COMMAND%" "%*"
 	call %* > %TOOLS%\out
 	for /f "tokens=*" %%s in (%TOOLS%\out) do (
-         call :color "%COLOR3%" "%%s"
+         call :color "%CL_INFO%" "%%s"
     )
     del /Q %TOOLS%\out
 
@@ -73,21 +77,21 @@ set OPTION=%1
     goto :eof
 
 :ask
-    call :color "%COLOR2%" "Press any key to continue"
+    call :color "%CL_QUESTION%" "Press any key to continue"
     pause >nul
 
     goto :eof
 
 :sep
-    call :color "%COLOR1%" "---------------------------------------------------------------------------------------"
+    call :color "%CL_COMMAND%" "---------------------------------------------------------------------------------------"
 
     goto :eof
 
 :download_file
     set url=%~1%
     set file=%~2%
-    call :color "%COLOR1%" "Downloading '%url%'"
-    call :color "%COLOR1%" "       into '%file%'"
+    call :color "%CL_COMMAND%" "Downloading '%url%'"
+    call :color "%CL_COMMAND%" "       into '%file%'"
     powershell -command "& { set-executionpolicy remotesigned -s currentuser; [System.Net.ServicePointManager]::SecurityProtocol = 3072 -bor 768 -bor 192 -bor 48; $client=New-Object System.Net.WebClient; $client.Headers.Add([System.Net.HttpRequestHeader]::Cookie, 'oraclelicense=accept-securebackup-cookie'); $client.DownloadFile('%url%','%file%') }"
 
     goto :eof
@@ -114,7 +118,7 @@ set OPTION=%1
     goto :eof
 
 :settings
-    call :color "%COLOR4%" "Setup variables..."
+    call :color "%CL_HEADER%" "Setup variables..."
 
     call :read_env
 
@@ -140,8 +144,8 @@ set OPTION=%1
     set GO=%GOPATH%\bin\go
 
     echo Language enviromnent variables
-    call :color "%COLOR3%" "PATH=%PATH%"
-    call :color "%COLOR3%" "GOPATH=%GOPATH%"
+    call :color "%CL_INFO%" "PATH=%PATH%"
+    call :color "%CL_INFO%" "GOPATH=%GOPATH%"
 
     set ARCH_URL=https://golang.org/dl/go1.16.5.windows-amd64.zip
     set ARCH_FOLDER=go
@@ -151,7 +155,7 @@ set OPTION=%1
     goto :eof
 
 :download
-    call :color "%COLOR4%" "Installing..."
+    call :color "%CL_HEADER%" "Installing..."
 
     if "%SKIP_GO_INSTALL%"=="true" ( goto :skip )
     if "%INSTALL_LOCALLY%"=="false" ( goto :skip )
@@ -165,20 +169,20 @@ set OPTION=%1
 
 :skip
     echo Installation skipped
-    call :color "%COLOR3%" "INSTALL_LOCALLY=%INSTALL_LOCALLY%"
-    call :color "%COLOR3%" "SKIP_GO_INSTALL=%SKIP_GO_INSTALL%"
+    call :color "%CL_INFO%" "INSTALL_LOCALLY=%INSTALL_LOCALLY%"
+    call :color "%CL_INFO%" "SKIP_GO_INSTALL=%SKIP_GO_INSTALL%"
 
     goto :restart
 
 :build
-    call :color "%COLOR4%" "Building client..."
+    call :color "%CL_HEADER%" "Building client..."
 
     call :print_color %GO% version
 
     goto :eof
 
 :test
-    call :color "%COLOR4%" "Starting tests..."
+    call :color "%CL_HEADER%" "Starting tests..."
 
     call :eval_echo "%GO% test ./..."
     echo.
@@ -186,7 +190,7 @@ set OPTION=%1
     goto :eof
 
 :run
-    call :color "%COLOR4%" "Running client..."
+    call :color "%CL_HEADER%" "Running client..."
 
     call :eval_echo "%GO% run main.go %GAME_TO_RUN% %BOARD_URL%"
 

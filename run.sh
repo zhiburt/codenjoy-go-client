@@ -7,16 +7,16 @@
 # pink 95
 # light blue 96
 # purple 97
-COLOR1=92
-COLOR2=94
-COLOR3=96
-COLOR4=93
+CL_HEADER=92
+CL_COMMAND=94
+CL_QUESTION=95
+CL_INFO=93
 
 eval_echo_color_output() {
     command=$1
     output=$($command)
-    color $COLOR2 "$command"
-    color $COLOR4 "$output"
+    color $CL_COMMAND "$command"
+    color $CL_INFO "$output"
 }
 
 color() {
@@ -27,7 +27,7 @@ color() {
 
 eval_echo() {
     command=$1
-    eval_echo_color $COLOR2 "$command"
+    eval_echo_color $CL_COMMAND "$command"
 }
 
 eval_echo_color() {
@@ -40,7 +40,7 @@ eval_echo_color() {
 }
 
 ask() {
-    ask_message $COLOR2 "Press any key to continue"
+    ask_message $CL_QUESTION "Press any key to continue"
 }
 
 ask_result=""
@@ -52,7 +52,7 @@ ask_message() {
 }
 
 sep() {
-    color $COLOR2 "---------------------------------------------------------------------------------------"
+    color $CL_COMMAND "---------------------------------------------------------------------------------------"
 }
 
 read_env() {
@@ -61,22 +61,22 @@ read_env() {
         if [[ ! $entry == \#* ]]
         then
             export $entry
-            color $COLOR4 "$entry"
+            color $CL_INFO "$entry"
         fi
     done
 }
 
-color $COLOR1 "Setup variables..."
+color $CL_HEADER "Setup variables..."
 echo
 
     eval_echo "ROOT=$PWD"
 
     read_env
 
-color $COLOR1 "Installing docker..."
+color $CL_HEADER "Installing docker..."
 echo
 
-    ask_message $COLOR4 "There is a need to update the system and install docker. Should we install (y/n)?"
+    ask_message $CL_QUESTION "There is a need to update the system and install docker. Should we install (y/n)?"
     if [[ "$ask_result" == "y" ]]; then
         if [ "$EUID" -ne 0 ]; then
           color $COLOR5 "Please run as root"
@@ -103,15 +103,15 @@ echo
 
         eval_echo_color_output "docker -v"
     else
-        color $COLOR4 "Skipped"
+        color $CL_INFO "Skipped"
     fi
 
-color $COLOR1 "Building client..."
+color $CL_HEADER "Building client..."
 echo
 
     eval_echo "docker build -t client-server -f Dockerfile ./ --build-arg SERVER_URL=$BOARD_URL --build-arg GAME_TO_RUN=$GAME_TO_RUN"
 
-color $COLOR1 "Starting client..."
+color $CL_HEADER "Starting client..."
 echo
 
     eval_echo "docker container rm client-server --force"
