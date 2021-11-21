@@ -43,7 +43,7 @@ call run :init_colors
     goto :eof
 
 :version
-    call run :print_color %GO% version
+    call run :eval_echo_color ‘%GO% version‘
     goto :eof
 
 :build
