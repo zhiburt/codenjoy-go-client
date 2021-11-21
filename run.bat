@@ -181,6 +181,6 @@ set OPTION=%1
 :run
     call :color "%CL_HEADER%" "Running client..."
 
-    call :eval_echo "%GO% run main.go %GAME_TO_RUN% %BOARD_URL%"
+    call :eval_echo "%GO% run main.go %GAME_TO_RUN% %SERVER_URL%"
 
     goto :eof
