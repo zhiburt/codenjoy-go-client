@@ -156,6 +156,7 @@
 
 :build
     call :color "%CL_HEADER%" "Building client..."
+    call stuff :version
     call stuff :build
     goto :eof
 

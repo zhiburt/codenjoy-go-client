@@ -47,7 +47,7 @@ call run :init_colors
     goto :eof
 
 :build
-    call :version
+    rem do nothing
     goto :eof
 
 :test    
