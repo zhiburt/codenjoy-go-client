@@ -29,25 +29,22 @@ import (
 )
 
 type Solver struct {
-	directions directions
 }
 
 func NewSolver() engine.Solver {
-	return Solver{
-		directions: initDirections(),
-	}
+	return Solver{}
 }
 
-func (s Solver) Answer(message string) string {
+func (Solver) Answer(message string) string {
 	board := newBoard(message)
 	fmt.Println("Board \n" + board.String())
-	action := s.nextAction(board)
+	action := nextAction(board)
 	fmt.Println("\nAnswer: " + action.String())
 	fmt.Println("-------------------------------------------------------------")
 	return action.String()
 }
 
-func (s Solver) nextAction(b *board) direction.Direction {
+func nextAction(b *board) direction.Direction {
 	// TODO: write your code here
-	return s.directions[direction.Right]
+	return directions.Inverted(right)
 }

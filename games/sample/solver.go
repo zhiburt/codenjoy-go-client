@@ -1,5 +1,3 @@
-package sample
-
 /*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
@@ -21,6 +19,8 @@ package sample
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
+package sample
 
 import (
 	"fmt"
@@ -46,5 +46,5 @@ func (Solver) Answer(message string) string {
 
 func nextAction(b *board) direction.Direction {
 	// TODO: write your code here
-	return direction.Act
+	return directions[act]
 }

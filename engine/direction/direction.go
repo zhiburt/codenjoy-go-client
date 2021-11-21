@@ -22,10 +22,6 @@ package direction
  * #L%
  */
 
-import (
-	"fmt"
-)
-
 type Direction struct {
 	name  Base
 	value int
@@ -35,13 +31,14 @@ type Direction struct {
 
 type Base string
 
+type Map map[Base]Direction
+
 const (
-	Left  Base = "Left"
-	Right Base = "Right"
-	Up    Base = "Up"
-	Down  Base = "Down"
-	Act   Base = "Act"
-	Stop  Base = "Stop"
+	Left  Base = "LEFT"
+	Right Base = "RIGHT"
+	Up    Base = "UP"
+	Down  Base = "DOWN"
+	Stop  Base = "STOP"
 )
 
 func New(value, dx, dy int, name Base) Direction {
@@ -65,28 +62,103 @@ func (d Direction) ChangeY(y int) int {
 	return y + d.dy
 }
 
-func (d Direction) Inverted() Base {
-	switch d.name {
+func (m Map) Get(name Base) Direction {
+	if m == nil {
+		return Direction{}
+	}
+	return m[name]
+}
+
+func (m Map) Inverted(name Base) Direction {
+	if m == nil {
+		return Direction{}
+	}
+	switch name {
 	case Left:
-		return Right
+		return m[Right]
 	case Right:
-		return Left
+		return m[Left]
 	case Down:
-		return Up
+		return m[Up]
 	case Up:
-		return Down
+		return m[Down]
 	default:
-		panic(fmt.Sprintf("Cant invert for: %+v", d))
+		return m[Stop]
+	}
+}
+
+func (m Map) Clockwise(name Base) Direction {
+	if m == nil {
+		return Direction{}
+	}
+	switch name {
+	case Up:
+		return m[Left]
+	case Left:
+		return m[Down]
+	case Down:
+		return m[Right]
+	case Right:
+		return m[Up]
+	default:
+		return m[Stop]
+	}
+}
+
+func (m Map) ContrClockwise(name Base) Direction {
+	if m == nil {
+		return Direction{}
+	}
+	switch name {
+	case Up:
+		return m[Right]
+	case Right:
+		return m[Down]
+	case Down:
+		return m[Left]
+	case Left:
+		return m[Up]
+	default:
+		return m[Stop]
+	}
+}
+
+func (m Map) MirrorTopBottom(name Base) Direction {
+	if m == nil {
+		return Direction{}
+	}
+	switch name {
+	case Up:
+		return m[Left]
+	case Right:
+		return m[Down]
+	case Down:
+		return m[Right]
+	case Left:
+		return m[Up]
+	default:
+		return m[Stop]
+	}
+}
+
+func (m Map) MirrorBottomTop(name Base) Direction {
+	if m == nil {
+		return Direction{}
+	}
+	switch name {
+	case Up:
+		return m[Right]
+	case Right:
+		return m[Up]
+	case Down:
+		return m[Left]
+	case Left:
+		return m[Down]
+	default:
+		return m[Stop]
 	}
 }
 
 func (d Direction) String() string {
 	return string(d.name)
 }
-
-//var Left = Direction{"Left", 0, -1, 0}
-//var Right = Direction{"Right", 1, 1, 0}
-//var Up = Direction{"Up", 2, 0, 1}
-//var Down = Direction{"Down", 3, 0, -1}
-//var Act = Direction{"Act", 4, 0, 0}
-//var Stop = Direction{"Stop", 5, 0, 0}

@@ -46,5 +46,5 @@ func (Solver) Answer(message string) string {
 
 func nextAction(b *board) direction.Direction {
 	// TODO: write your code here
-	return direction.Act
+	return directions.Get(act)
 }
