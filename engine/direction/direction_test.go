@@ -1,4 +1,4 @@
-package engine
+package direction
 
 /*-
  * #%L
@@ -28,36 +28,36 @@ import (
 )
 
 func TestDirectionValue(t *testing.T) {
-	assert.Equal(t, 0, LEFT.Value())
-	assert.Equal(t, 1, RIGHT.Value())
-	assert.Equal(t, 2, UP.Value())
-	assert.Equal(t, 3, DOWN.Value())
-	assert.Equal(t, 4, ACT.Value())
-	assert.Equal(t, 5, STOP.Value())
+	assert.Equal(t, 0, New(0, 0, 0, Left).Value())
+	assert.Equal(t, 1, New(1, 0, 0, Right).Value())
+	assert.Equal(t, 2, New(2, 0, 0, Up).Value())
+	assert.Equal(t, 3, New(3, 0, 0, Down).Value())
+	assert.Equal(t, 4, New(4, 0, 0, Act).Value())
+	assert.Equal(t, 5, New(5, 0, 0, Stop).Value())
 }
 
 func TestDirectionChangeX(t *testing.T) {
-	assert.Equal(t, 0, LEFT.ChangeX(1))
-	assert.Equal(t, 2, RIGHT.ChangeX(1))
-	assert.Equal(t, 1, UP.ChangeX(1))
-	assert.Equal(t, 1, DOWN.ChangeX(1))
+	assert.Equal(t, 0, New(0, -1, 0, Left).ChangeX(1))
+	assert.Equal(t, 2, New(0, 1, 0, Right).ChangeX(1))
+	assert.Equal(t, 1, New(0, 0, 0, Up).ChangeX(1))
+	assert.Equal(t, 1, New(0, 0, 0, Down).ChangeX(1))
 }
 
 func TestDirectionChangeY(t *testing.T) {
-	assert.Equal(t, 1, LEFT.ChangeY(1))
-	assert.Equal(t, 1, RIGHT.ChangeY(1))
-	assert.Equal(t, 2, UP.ChangeY(1))
-	assert.Equal(t, 0, DOWN.ChangeY(1))
+	assert.Equal(t, 1, New(0, 0, 0, Left).ChangeY(1))
+	assert.Equal(t, 1, New(0, 0, 0, Right).ChangeY(1))
+	assert.Equal(t, 2, New(0, 0, 1, Up).ChangeY(1))
+	assert.Equal(t, 0, New(0, 0, -1, Down).ChangeY(1))
 }
 
 func TestDirectionInverted(t *testing.T) {
-	assert.Equal(t, RIGHT, LEFT.Inverted())
-	assert.Equal(t, LEFT, RIGHT.Inverted())
-	assert.Equal(t, DOWN, UP.Inverted())
-	assert.Equal(t, UP, DOWN.Inverted())
+	assert.Equal(t, Right, Direction{name: Left}.Inverted())
+	assert.Equal(t, Left, Direction{name: Right}.Inverted())
+	assert.Equal(t, Down, Direction{name: Up}.Inverted())
+	assert.Equal(t, Up, Direction{name: Down}.Inverted())
 }
 
 func TestDirectionInvalidInverted(t *testing.T) {
-	assert.Panics(t, func() { ACT.Inverted() })
-	assert.Panics(t, func() { STOP.Inverted() })
+	assert.Panics(t, func() { Direction{name: Act}.Inverted() })
+	assert.Panics(t, func() { Direction{name: Stop}.Inverted() })
 }
