@@ -1,5 +1,3 @@
-package sample
-
 /*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
@@ -22,9 +20,12 @@ package sample
  * #L%
  */
 
+package sample
+
 import (
 	"fmt"
 	"github.com/codenjoyme/codenjoy-go-client/engine"
+	"github.com/codenjoyme/codenjoy-go-client/engine/direction"
 )
 
 type Solver struct {
@@ -43,7 +44,7 @@ func (Solver) Answer(message string) string {
 	return action.String()
 }
 
-func nextAction(b *board) engine.Direction {
+func nextAction(b *board) direction.Direction {
 	// TODO: write your code here
-	return engine.ACT
+	return directions[act]
 }
