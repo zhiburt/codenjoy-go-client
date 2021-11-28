@@ -1,7 +1,3 @@
-package direction
-
-import "errors"
-
 /*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
@@ -23,6 +19,10 @@ import "errors"
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
+package direction
+
+import "errors"
 
 type Direction struct {
 	name  Base

@@ -1,5 +1,3 @@
-package engine
-
 /*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
@@ -22,6 +20,8 @@ package engine
  * #L%
  */
 
+package engine
+
 import (
 	"fmt"
 	"github.com/gorilla/websocket"
@@ -30,7 +30,7 @@ import (
 	"strings"
 )
 
-const URL_REGEX = "(?P<scheme>http|https)://(?P<host>.+)/codenjoy-contest/board/player/(?P<player>\\w+)\\?code=(?P<code>\\d+)"
+const urlRegex = "(?P<scheme>http|https)://(?P<host>.+)/codenjoy-contest/board/player/(?P<player>\\w+)\\?code=(?P<code>\\d+)"
 
 type WebSocketRunner struct {
 	token string
@@ -41,7 +41,7 @@ func NewWebSocketRunner(url string) *WebSocketRunner {
 }
 
 func urlToWsToken(url string) string {
-	r := regexp.MustCompile(URL_REGEX)
+	r := regexp.MustCompile(urlRegex)
 	params := r.FindStringSubmatch(url)
 
 	scheme := params[r.SubexpIndex("scheme")]
