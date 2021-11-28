@@ -6,6 +6,7 @@ import (
 	"github.com/codenjoyme/codenjoy-go-client/games/clifford"
 	"github.com/codenjoyme/codenjoy-go-client/games/mollymage"
 	"github.com/codenjoyme/codenjoy-go-client/games/sample"
+	"log"
 	"os"
 )
 
@@ -20,7 +21,7 @@ func main() {
 
 	s, err := gameSolver(game)
 	if err != nil {
-
+		log.Fatalln(err)
 	}
 	engine.NewWebSocketRunner(url).Run(s)
 }

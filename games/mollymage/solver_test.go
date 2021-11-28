@@ -36,5 +36,7 @@ func TestAnswer(t *testing.T) {
 		"☼☼☼☼☼"
 	s, err := NewSolver()
 	assert.NoError(t, err)
-	assert.Equal(t, "ACT", s.Answer(message))
+	if assert.NotNil(t, s) {
+		assert.Equal(t, "ACT", s.Answer(message))
+	}
 }
