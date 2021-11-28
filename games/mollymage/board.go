@@ -24,9 +24,9 @@ package mollymage
 
 import (
 	"fmt"
-	"github.com/codenjoyme/codenjoy-go-client/engine"
-	"reflect"
 	"sort"
+
+	"github.com/codenjoyme/codenjoy-go-client/engine"
 )
 
 const BLAST_RANGE int = 3
@@ -95,7 +95,7 @@ func appendIfMissing(slice []*engine.Point, points ...*engine.Point) []*engine.P
 	for _, p := range points {
 		existed := false
 		for _, ele := range slice {
-			if reflect.DeepEqual(ele, p) {
+			if ele == p {
 				existed = true
 				break
 			}
@@ -159,7 +159,7 @@ func (b *board) predictBlastsForOneSide(pt *engine.Point, nextStep Move) []*engi
 		}
 		isBarrier := false
 		for _, barrier := range barriers {
-			if reflect.DeepEqual(barrier, pt) {
+			if barrier == pt {
 				isBarrier = true
 				break
 			}
