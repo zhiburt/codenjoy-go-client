@@ -24,8 +24,9 @@ package sample
 
 import (
 	"fmt"
+
+	"github.com/codenjoyme/codenjoy-go-client/direction"
 	"github.com/codenjoyme/codenjoy-go-client/engine"
-	"github.com/codenjoyme/codenjoy-go-client/engine/direction"
 )
 
 type Solver struct {

@@ -24,27 +24,112 @@ package mollymage
 
 import (
 	"fmt"
+	"math"
+	"math/rand"
+	"time"
+
+	"github.com/codenjoyme/codenjoy-go-client/direction"
 	"github.com/codenjoyme/codenjoy-go-client/engine"
-	"github.com/codenjoyme/codenjoy-go-client/engine/direction"
 )
 
 type Solver struct {
+	actTimer uint
 }
 
 func NewSolver() engine.Solver {
-	return Solver{}
+	return &Solver{}
 }
 
-func (Solver) Answer(message string) string {
+func (solver *Solver) Answer(message string) string {
 	board := newBoard(message)
 	fmt.Println("Board \n" + board.String())
-	action := nextAction(board)
+	action := nextAction(solver, board)
 	fmt.Println("\nAnswer: " + action.String())
 	fmt.Println("-------------------------------------------------------------")
 	return action.String()
 }
 
-func nextAction(b *board) direction.Direction {
-	// TODO: write your code here
+func nextAction(solver *Solver, b *board) direction.Direction {
+	// Algorithm is based on graph A* algorithm.
+	//
+	// We don't care about other players,
+	// We just try to not get on BOMBs and
+	// place our bombs as often as possible and as close
+	// as possible to chests
+	//
+	// we could actually estimate how much people in the area so
+	// if there's a lot of chests but there's a lot of people there
+	// we would chose a nearest chest as a target
+	//
+	// don't forget that chests by which side BOMBs are spawned has no value any more
+
+	estimationFunction(b)
+
+	if solver.actTimer == 0 {
+		solver.actTimer = 3
+		return directions.Get(act)
+	}
+
+	solver.actTimer -= 1
+	for i := 0; i < 4; i += 1 {
+		nextMove := randomMove()
+		nextPos := doMove(b.findHero(), &nextMove)
+		if !inDanger(b, nextPos) {
+			return nextMove
+		}
+	}
+
+	if !inDanger(b, b.findHero()) {
+		return directions.Get(stop)
+	}
+
 	return directions.Get(act)
+}
+
+func estimationFunction(b *board) int32 {
+	if inDanger(b, b.findHero()) {
+		return math.MinInt32
+	}
+
+	return 0
+}
+
+func inDanger(b *board, hero *engine.Point) bool {
+	blasts := b.findBlasts()
+	for _, blast := range blasts {
+		if blast == hero {
+			return true
+		}
+	}
+
+	return false
+}
+
+func isIn(pos *engine.Point, arr ...*engine.Point) bool {
+	for _, point := range arr {
+		if point == pos {
+			return true
+		}
+	}
+
+	return false
+}
+
+func randomMove() direction.Direction {
+	rand.Seed(time.Now().UnixNano())
+	n := rand.Intn(4)
+	switch n {
+	case 0:
+		return directions.Get(up)
+	case 1:
+		return directions.Get(down)
+	case 2:
+		return directions.Get(left)
+	default:
+		return directions.Get(right)
+	}
+}
+
+func doMove(pos *engine.Point, direction *direction.Direction) *engine.Point {
+	return engine.NewPoint(direction.ChangeX(pos.X()), direction.ChangeY(pos.Y()))
 }
