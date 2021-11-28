@@ -178,7 +178,7 @@ func (m Map) MirrorBottomTop(name Base) Direction {
 }
 
 func (m Map) valid() bool {
-	return m[Left].name != "" && m[Right].name != ""
+	return m[Left].name != "" && m[Right].name != "" && m[Up].name != "" && m[Down].name != ""
 }
 
 func (d Direction) String() string {
