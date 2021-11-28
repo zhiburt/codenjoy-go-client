@@ -1,5 +1,9 @@
 package direction
 
+import (
+	"github.com/codenjoyme/codenjoy-go-client/engine"
+)
+
 /*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
@@ -22,135 +26,103 @@ package direction
  * #L%
  */
 
-type Direction struct {
-	name Base
-	dx   int
-	dy   int
-}
+type Directions map[Side]*engine.Point
 
-type Base string
-
-type Map map[Base]Direction
+type Side int
 
 const (
-	Left  Base = "LEFT"
-	Right Base = "RIGHT"
-	Up    Base = "UP"
-	Down  Base = "DOWN"
-	Stop  Base = "STOP"
+	Left = iota
+	Right
+	Up
+	Down
+	Stop
 )
 
-func New(dx, dy int, name Base) Direction {
-	return Direction{
-		dx:   dx,
-		dy:   dy,
-		name: name,
+func FromPoint(pos *engine.Point) Directions {
+	return Directions{
+		Left:  engine.NewPoint(pos.X()-1, pos.Y()),
+		Right: engine.NewPoint(pos.X()+1, pos.Y()),
+		Up:    engine.NewPoint(pos.X(), pos.Y()-1),
+		Down:  engine.NewPoint(pos.X(), pos.Y()+1),
+		Stop:  engine.NewPoint(pos.X(), pos.Y()),
 	}
 }
 
-func (d Direction) ChangeX(x int) int {
-	return x + d.dx
+func (m *Directions) Get(side Side) *engine.Point {
+	return (*m)[side]
 }
 
-func (d Direction) ChangeY(y int) int {
-	return y + d.dy
-}
-
-func (m Map) Get(name Base) (Direction, bool) {
-	d, found := m[name]
-	return d, found
-}
-
-func (m Map) Inverted(name Base) Direction {
-	if m == nil {
-		return Direction{}
-	}
-	switch name {
+func (m *Directions) Inverted(side Side) Side {
+	switch side {
 	case Left:
-		return m[Right]
+		return Right
 	case Right:
-		return m[Left]
+		return Left
 	case Down:
-		return m[Up]
+		return Up
 	case Up:
-		return m[Down]
+		return Down
 	default:
-		return m[Stop]
+		panic("This point is unreachable")
 	}
 }
 
-func (m Map) Clockwise(name Base) Direction {
-	if m == nil {
-		return Direction{}
-	}
-	switch name {
+func (m *Directions) Clockwise(side Side) Side {
+	switch side {
 	case Up:
-		return m[Left]
+		return Left
 	case Left:
-		return m[Down]
+		return Down
 	case Down:
-		return m[Right]
+		return Right
 	case Right:
-		return m[Up]
+		return Up
 	default:
-		return m[Stop]
+		panic("This point is unreachable")
 	}
 }
 
-func (m Map) ContrClockwise(name Base) Direction {
-	if m == nil {
-		return Direction{}
-	}
-	switch name {
+func (m *Directions) ContrClockwise(side Side) Side {
+	switch side {
 	case Up:
-		return m[Right]
+		return Right
 	case Right:
-		return m[Down]
+		return Down
 	case Down:
-		return m[Left]
+		return Left
 	case Left:
-		return m[Up]
+		return Up
 	default:
-		return m[Stop]
+		panic("This point is unreachable")
 	}
 }
 
-func (m Map) MirrorTopBottom(name Base) Direction {
-	if m == nil {
-		return Direction{}
-	}
-	switch name {
+func (m *Directions) MirrorTopBottom(side Side) Side {
+	switch side {
 	case Up:
-		return m[Left]
+		return Left
 	case Right:
-		return m[Down]
+		return Down
 	case Down:
-		return m[Right]
+		return Right
 	case Left:
-		return m[Up]
+		return Up
 	default:
-		return m[Stop]
+		panic("This point is unreachable")
 	}
 }
 
-func (m Map) MirrorBottomTop(name Base) Direction {
-	if m == nil {
-		return Direction{}
-	}
-	switch name {
+func (m *Directions) MirrorBottomTop(side Side) Side {
+	switch side {
 	case Up:
-		return m[Right]
+		return Right
 	case Right:
-		return m[Up]
+		return Up
 	case Down:
-		return m[Left]
+		return Left
 	case Left:
-		return m[Down]
+		return Down
 	default:
-		return m[Stop]
+		panic("This point is unreachable")
 	}
-}
-
-func (d Direction) String() string {
-	return string(d.name)
 }

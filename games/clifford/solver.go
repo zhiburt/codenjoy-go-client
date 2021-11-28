@@ -36,16 +36,29 @@ func NewSolver() engine.Solver {
 	return Solver{}
 }
 
-func (Solver) Answer(message string) string {
+func (Solver) Answer(message string) engine.Action {
 	board := newBoard(message)
 	fmt.Println("Board \n" + board.String())
 	action := nextAction(board)
 	fmt.Println("\nAnswer: " + action.String())
 	fmt.Println("-------------------------------------------------------------")
-	return action.String()
+	return action
 }
 
-func nextAction(b *board) direction.Direction {
+func nextAction(b *board) engine.Action {
 	// TODO: write your code here
-	return directions.Inverted(right)
+	return sideToAction(directions.Inverted(direction.Right))
+}
+
+func sideToAction(side direction.Side) engine.Action {
+	switch side {
+	case direction.Down:
+		return down
+	case direction.Up:
+		return up
+	case direction.Left:
+		return left
+	case direction.Right:
+		return right
+	}
 }

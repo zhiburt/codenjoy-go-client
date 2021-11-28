@@ -25,30 +25,23 @@ package direction
 import (
 	"testing"
 
+	"github.com/codenjoyme/codenjoy-go-client/engine"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestDirectionInverted(t *testing.T) {
-	m := Map{
-		Left:  Direction{name: Left},
-		Right: Direction{name: Right},
-		Up:    Direction{name: Up},
-		Down:  Direction{name: Down},
-	}
-	assert.Equal(t, Direction{name: Right}, m.Inverted(Left))
-	assert.Equal(t, Direction{name: Left}, m.Inverted(Right))
-	assert.Equal(t, Direction{name: Down}, m.Inverted(Up))
-	assert.Equal(t, Direction{name: Up}, m.Inverted(Down))
+	m := FromPoint(engine.NewPoint(1, 1))
+	assert.Equal(t, Right, m.Inverted(Left))
+	assert.Equal(t, Left, m.Inverted(Right))
+	assert.Equal(t, Up, m.Inverted(Down))
+	assert.Equal(t, Down, m.Inverted(Up))
 }
 
 func TestDirectionInvalidInverted(t *testing.T) {
-	m := Map{
-		Left:  Direction{name: Left},
-		Right: Direction{name: Right},
-		Up:    Direction{name: Up},
-		Down:  Direction{name: Down},
-		Stop:  Direction{name: ""},
-	}
-	assert.Equal(t, Direction{name: ""}, m.Inverted("Act"))
-	assert.Equal(t, Direction{name: ""}, m.Inverted(Stop))
+	m := FromPoint(engine.NewPoint(1, 1))
+
+	invalidSide := Side(1000)
+	assert.Panics(t, func() {
+		m.Inverted(invalidSide)
+	})
 }

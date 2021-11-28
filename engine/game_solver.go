@@ -22,6 +22,12 @@ package engine
  * #L%
  */
 
+type Action string
+
 type Solver interface {
-    Answer(message string) string
+	Answer(message string) Action
+}
+
+func (a Action) String() string {
+	return string(a)
 }
