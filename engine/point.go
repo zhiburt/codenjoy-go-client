@@ -66,6 +66,10 @@ func StepDown(pt *Point) *Point {
 	return NewPoint(pt.X(), pt.Y()-1)
 }
 
+func (lhs *Point) Equal(rhs *Point) bool {
+	return lhs.X() == rhs.X() && lhs.Y() == rhs.Y()
+}
+
 type SortedPoints []*Point
 
 func (p SortedPoints) Len() int           { return len(p) }
