@@ -1,5 +1,7 @@
 package direction
 
+import "errors"
+
 /*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
@@ -40,6 +42,22 @@ const (
 	Down  Base = "DOWN"
 	Stop  Base = "STOP"
 )
+
+func NewMap(directions ...Direction) (Map, error) {
+	m := make(Map, len(directions))
+	var n Base
+	for _, d := range directions {
+		n = d.name
+		if d.name == Stop {
+			d.name = ""
+		}
+		m[n] = d
+	}
+	if m.valid() {
+		return m, nil
+	}
+	return nil, errors.New("map doesn't contain all required basic directions: Left, Right, Up, Down, Stop")
+}
 
 func New(value, dx, dy int, name Base) Direction {
 	return Direction{
@@ -157,6 +175,10 @@ func (m Map) MirrorBottomTop(name Base) Direction {
 	default:
 		return m[Stop]
 	}
+}
+
+func (m Map) valid() bool {
+	return m[Left].name != "" && m[Right].name != ""
 }
 
 func (d Direction) String() string {

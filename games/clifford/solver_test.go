@@ -34,5 +34,7 @@ func TestAnswer(t *testing.T) {
 		"☼ ► ☼" +
 		"☼   ☼" +
 		"☼☼☼☼☼"
-	assert.Equal(t, "RIGHT", NewSolver().Answer(message))
+	s, err := NewSolver()
+	assert.NoError(t, err)
+	assert.Equal(t, "RIGHT", s.Answer(message))
 }
