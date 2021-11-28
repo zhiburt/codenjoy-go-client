@@ -61,4 +61,6 @@ func sideToAction(side direction.Side) engine.Action {
 	case direction.Right:
 		return right
 	}
+
+	panic("unreachable")
 }

@@ -38,6 +38,23 @@ const (
 	Stop
 )
 
+func (side Side) Move(pos *engine.Point) *engine.Point {
+	switch side {
+	case Left:
+		return engine.NewPoint(pos.X()-1, pos.Y())
+	case Right:
+		return engine.NewPoint(pos.X()+1, pos.Y())
+	case Up:
+		return engine.NewPoint(pos.X(), pos.Y()-1)
+	case Down:
+		return engine.NewPoint(pos.X()-1, pos.Y()+1)
+	case Stop:
+		return engine.NewPoint(pos.X(), pos.Y())
+	default:
+		panic("This point is unreachable")
+	}
+}
+
 func FromPoint(pos *engine.Point) Directions {
 	return Directions{
 		Left:  engine.NewPoint(pos.X()-1, pos.Y()),
