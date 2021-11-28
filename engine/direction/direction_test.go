@@ -23,27 +23,10 @@ package direction
  */
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
-
-func TestDirectionValue(t *testing.T) {
-	assert.Equal(t, 0, Direction{value: 0}.Value())
-	assert.Equal(t, 1, Direction{value: 1}.Value())
-	assert.Equal(t, 2, Direction{value: 2}.Value())
-}
-
-func TestDirectionChangeX(t *testing.T) {
-	assert.Equal(t, 0, Direction{dx: -1}.ChangeX(1))
-	assert.Equal(t, 2, Direction{dx: 1}.ChangeX(1))
-	assert.Equal(t, 1, Direction{dx: 0}.ChangeX(1))
-}
-
-func TestDirectionChangeY(t *testing.T) {
-	assert.Equal(t, 1, Direction{dy: 0}.ChangeY(1))
-	assert.Equal(t, 2, Direction{dy: 1}.ChangeY(1))
-	assert.Equal(t, 0, Direction{dy: -1}.ChangeY(1))
-}
 
 func TestDirectionInverted(t *testing.T) {
 	m := Map{

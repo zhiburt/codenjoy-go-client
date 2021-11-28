@@ -23,10 +23,9 @@ package direction
  */
 
 type Direction struct {
-	name  Base
-	value int
-	dx    int
-	dy    int
+	name Base
+	dx   int
+	dy   int
 }
 
 type Base string
@@ -41,17 +40,12 @@ const (
 	Stop  Base = "STOP"
 )
 
-func New(value, dx, dy int, name Base) Direction {
+func New(dx, dy int, name Base) Direction {
 	return Direction{
-		value: value,
-		dx:    dx,
-		dy:    dy,
-		name:  name,
+		dx:   dx,
+		dy:   dy,
+		name: name,
 	}
-}
-
-func (d Direction) Value() int {
-	return d.value
 }
 
 func (d Direction) ChangeX(x int) int {
