@@ -56,11 +56,9 @@ func (d Direction) ChangeY(y int) int {
 	return y + d.dy
 }
 
-func (m Map) Get(name Base) Direction {
-	if m == nil {
-		return Direction{}
-	}
-	return m[name]
+func (m Map) Get(name Base) (Direction, bool) {
+	d, found := m[name]
+	return d, found
 }
 
 func (m Map) Inverted(name Base) Direction {
