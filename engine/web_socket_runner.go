@@ -23,11 +23,13 @@ package engine
  */
 
 import (
+	"crypto/tls"
 	"fmt"
-	"github.com/gorilla/websocket"
 	"log"
 	"regexp"
 	"strings"
+
+	"github.com/gorilla/websocket"
 )
 
 const URL_REGEX = "(?P<scheme>http|https)://(?P<host>.+)/codenjoy-contest/board/player/(?P<player>\\w+)\\?code=(?P<code>\\d+)"
@@ -58,7 +60,8 @@ func urlToWsToken(url string) string {
 }
 
 func (r *WebSocketRunner) Run(solver Solver) {
-	connection, _, err := websocket.DefaultDialer.Dial(r.token, nil)
+	ws := websocket.Dialer{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}
+	connection, _, err := ws.Dial(r.token, nil)
 	if err != nil {
 		log.Println("unable to establish websocket connection, error: ", err)
 		return
