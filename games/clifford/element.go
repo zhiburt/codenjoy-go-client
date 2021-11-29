@@ -299,8 +299,8 @@ var elements = map[string]rune{
 
 	"CLOSED_DOOR_BRONZE": 'B',
 
-	// Bronze key. Helps open/close golden gates. The key can only
-	// be used once.
+  // Golden key. Helps open/close golden gates. The key can only
+  // be used once.
 
 	"KEY_GOLD": '+',
 

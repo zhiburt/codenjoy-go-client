@@ -8,22 +8,32 @@ import (
 	"github.com/codenjoyme/codenjoy-go-client/games/sample"
 	"log"
 	"os"
+	"fmt"
 )
 
 func main() {
 	game := "mollymage"
 	url := "http://127.0.0.1:8080/codenjoy-contest/board/player/0?code=000000000000"
+    source := "Runner"
 
 	if len(os.Args) == 3 {
 		game = os.Args[1]
 		url = os.Args[2]
+        source = "Environment"
 	}
 
+	fmt.Printf("Got from %s:\n" +
+            "\t 'GAME': '%s'\n" +
+            "\t 'URL':  '%s'\n",
+            source,
+            game,
+            url)
+  
 	s, err := gameSolver(game)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	engine.NewWebSocketRunner(url).Run(s)
+  engine.NewWebSocketRunner(url).Run(s)
 }
 
 func gameSolver(game string) (engine.Solver, error) {

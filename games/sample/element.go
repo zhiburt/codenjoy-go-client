@@ -1,3 +1,5 @@
+package sample
+
 /*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
@@ -20,39 +22,38 @@
  * #L%
  */
 
-package sample
-
 var elements = map[string]rune{
 
-	// Empty place where the hero can go.
+        // Empty place where the hero can go.
 
-	"NONE": ' ',
+    "NONE": ' ',
 
-	// Wall you cant walk through.
+        // Wall you cant walk through.
 
-	"WALL": '☼',
+    "WALL": '☼',
 
-	// Your hero.
+        // Your hero.
 
-	"HERO": '☺',
+    "HERO": '☺',
 
-	// Heroes of other players.
+        // Heroes of other players.
 
-	"OTHER_HERO": '☻',
+    "OTHER_HERO": '☻',
 
-	// Your hero died. His body will disappear in the next tick.
+        // Your hero died. His body will disappear in the next tick.
 
-	"DEAD_HERO": 'X',
+    "DEAD_HERO": 'X',
 
-	// Another player's hero died.
+        // Another player's hero died.
 
-	"OTHER_DEAD_HERO": 'Y',
+    "OTHER_DEAD_HERO": 'Y',
 
-	// Gold. It must be picked up.
+        // Gold. It must be picked up.
 
-	"GOLD": '$',
+    "GOLD": '$',
 
-	// Bomb planted by the hero. You can blow up on it.
+        // Bomb planted by the hero. You can blow up on it.
 
-	"BOMB": 'x',
+    "BOMB": 'x',
+
 }
