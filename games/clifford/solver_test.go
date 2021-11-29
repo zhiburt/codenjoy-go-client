@@ -1,5 +1,3 @@
-package clifford
-
 /*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
@@ -22,6 +20,8 @@ package clifford
  * #L%
  */
 
+package clifford
+
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -34,5 +34,9 @@ func TestAnswer(t *testing.T) {
 		"☼ ► ☼" +
 		"☼   ☼" +
 		"☼☼☼☼☼"
-	assert.Equal(t, "RIGHT", NewSolver().Answer(message))
+	s, err := NewSolver()
+	assert.NoError(t, err)
+	if assert.NotNil(t, s) {
+		assert.Equal(t, "RIGHT", s.Answer(message))
+	}
 }

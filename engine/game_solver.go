@@ -1,5 +1,3 @@
-package engine
-
 /*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
@@ -22,6 +20,8 @@ package engine
  * #L%
  */
 
+package engine
+
 type Solver interface {
-    Answer(message string) string
+	Answer(message string) string
 }
