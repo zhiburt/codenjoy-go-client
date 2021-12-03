@@ -1,10 +1,12 @@
 package main
 
 import (
+	"errors"
 	"github.com/codenjoyme/codenjoy-go-client/engine"
 	"github.com/codenjoyme/codenjoy-go-client/games/clifford"
 	"github.com/codenjoyme/codenjoy-go-client/games/mollymage"
 	"github.com/codenjoyme/codenjoy-go-client/games/sample"
+	"log"
 	"os"
 	"fmt"
 )
@@ -26,11 +28,15 @@ func main() {
             source,
             game,
             url)
-
-	engine.NewWebSocketRunner(url).Run(determineGameSolver(game))
+  
+	s, err := gameSolver(game)
+	if err != nil {
+		log.Fatalln(err)
+	}
+  engine.NewWebSocketRunner(url).Run(s)
 }
 
-func determineGameSolver(game string) engine.Solver {
+func gameSolver(game string) (engine.Solver, error) {
 	switch game {
 	case "sample":
 		return sample.NewSolver()
@@ -38,6 +44,7 @@ func determineGameSolver(game string) engine.Solver {
 		return mollymage.NewSolver()
 	case "clifford":
 		return clifford.NewSolver()
+	default:
+		return nil, errors.New("unable to determine game type")
 	}
-	panic("unable to determine game type")
 }

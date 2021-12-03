@@ -1,3 +1,25 @@
+/*-
+ * #%L
+ * Codenjoy - it's a dojo-like platform from developers to developers.
+ * %%
+ * Copyright (C) 2021 Codenjoy
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * #L%
+ */
+
 package clifford
 
 import (
@@ -21,19 +43,21 @@ const (
 	closeDoorRight direction.Base = "ACT(3),RIGHT"
 )
 
-var directions = direction.Map{
-	left:           direction.New(0, -1, 0, direction.Left), // move
-	right:          direction.New(1, 1, 0, direction.Right), // move
-	up:             direction.New(2, 0, -1, direction.Up),   // move
-	down:           direction.New(3, 0, 1, direction.Down),  // move
-	stop:           direction.New(6, 0, 0, ""),              // stay
-	crackLeft:      direction.New(4, 0, 0, crackLeft),       // crack ground at left
-	crackRight:     direction.New(5, 0, 0, crackRight),      // crack ground at right
-	die:            direction.New(7, 0, 0, die),             // suicide
-	shootLeft:      direction.New(8, 0, 0, shootLeft),       // shoot to the left
-	shootRight:     direction.New(9, 0, 0, shootRight),      // shoot to the right
-	openDoorLeft:   direction.New(10, 0, 0, openDoorLeft),   // open door on left
-	openDoorRight:  direction.New(11, 0, 0, openDoorRight),  // open door on right
-	closeDoorLeft:  direction.New(12, 0, 0, closeDoorLeft),  // close door on left
-	closeDoorRight: direction.New(13, 0, 0, closeDoorRight), // close door on right
+func directions() (direction.Map, error) {
+	return direction.NewMap(
+		direction.New(0, -1, 0, left),           // move
+		direction.New(1, 1, 0, right),           // move
+		direction.New(2, 0, -1, up),             // move
+		direction.New(3, 0, 1, down),            // move
+		direction.New(6, 0, 0, stop),            // stay
+		direction.New(4, 0, 0, crackLeft),       // crack ground at left
+		direction.New(5, 0, 0, crackRight),      // crack ground at right
+		direction.New(7, 0, 0, die),             // suicide
+		direction.New(8, 0, 0, shootLeft),       // shoot to the left
+		direction.New(9, 0, 0, shootRight),      // shoot to the right
+		direction.New(10, 0, 0, openDoorLeft),   // open door on left
+		direction.New(11, 0, 0, openDoorRight),  // open door on right
+		direction.New(12, 0, 0, closeDoorLeft),  // close door on left
+		direction.New(13, 0, 0, closeDoorRight), // close door on right
+	)
 }

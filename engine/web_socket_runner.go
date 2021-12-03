@@ -1,5 +1,3 @@
-package engine
-
 /*-
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
@@ -22,15 +20,19 @@ package engine
  * #L%
  */
 
+package engine
+
 import (
+	"crypto/tls"
 	"fmt"
-	"github.com/gorilla/websocket"
 	"log"
 	"regexp"
 	"strings"
+
+	"github.com/gorilla/websocket"
 )
 
-const URL_REGEX = "(?P<scheme>http|https)://(?P<host>.+)/codenjoy-contest/board/player/(?P<player>\\w+)\\?code=(?P<code>\\d+)"
+const urlRegex = "(?P<scheme>http|https)://(?P<host>.+)/codenjoy-contest/board/player/(?P<player>\\w+)\\?code=(?P<code>\\d+)"
 
 type WebSocketRunner struct {
 	token string
@@ -41,7 +43,7 @@ func NewWebSocketRunner(url string) *WebSocketRunner {
 }
 
 func urlToWsToken(url string) string {
-	r := regexp.MustCompile(URL_REGEX)
+	r := regexp.MustCompile(urlRegex)
 	params := r.FindStringSubmatch(url)
 
 	scheme := params[r.SubexpIndex("scheme")]
@@ -58,7 +60,8 @@ func urlToWsToken(url string) string {
 }
 
 func (r *WebSocketRunner) Run(solver Solver) {
-	connection, _, err := websocket.DefaultDialer.Dial(r.token, nil)
+	ws := websocket.Dialer{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}
+	connection, _, err := ws.Dial(r.token, nil)
 	if err != nil {
 		log.Println("unable to establish websocket connection, error: ", err)
 		return
