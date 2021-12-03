@@ -95,7 +95,7 @@ func appendIfMissing(slice []*engine.Point, points ...*engine.Point) []*engine.P
 	for _, p := range points {
 		existed := false
 		for _, ele := range slice {
-			if ele == p {
+			if ele.Equal(p) {
 				existed = true
 				break
 			}
@@ -159,7 +159,7 @@ func (b *board) predictBlastsForOneSide(pt *engine.Point, nextStep Move) []*engi
 		}
 		isBarrier := false
 		for _, barrier := range barriers {
-			if barrier == pt {
+			if barrier.Equal(pt) {
 				isBarrier = true
 				break
 			}
@@ -192,3 +192,15 @@ func (b *board) String() string {
 		"\nBlasts at: " + fmt.Sprintf("%v", b.findBlasts()) +
 		"\nExpected blasts at: " + fmt.Sprintf("%v", b.predictFutureBlasts())
 }
+
+// todo:
+// * blasts doesn't work it sometimes goes into its own blasts
+// * devalue treasures which are about to be BOOMed
+// * threasure look not for closest position but for a position which will affect most of the threasures
+// * unction to determine when to plant the bomb the best
+// * once we are by the threasure we are not afraid of potions && ghosts
+// * add value to good potions
+
+// * We can't go over potion so we need to fix it
+// * Ghost on bomb can't be seen as bomb so adding a tracking of this cases could be cool
+//   We could keep a map of blasts on the map and clean it when blasts appear

@@ -31,7 +31,7 @@ type Directions map[Side]*engine.Point
 type Side int
 
 const (
-	Left = iota
+	Left Side = iota
 	Right
 	Up
 	Down
@@ -45,11 +45,28 @@ func (side Side) Move(pos *engine.Point) *engine.Point {
 	case Right:
 		return engine.NewPoint(pos.X()+1, pos.Y())
 	case Up:
-		return engine.NewPoint(pos.X(), pos.Y()-1)
+		return engine.NewPoint(pos.X(), pos.Y()+1)
 	case Down:
-		return engine.NewPoint(pos.X()-1, pos.Y()+1)
+		return engine.NewPoint(pos.X(), pos.Y()-1)
 	case Stop:
 		return engine.NewPoint(pos.X(), pos.Y())
+	default:
+		panic("This point is unreachable")
+	}
+}
+
+func (side Side) String() string {
+	switch side {
+	case Left:
+		return "Left"
+	case Right:
+		return "Right"
+	case Up:
+		return "Up"
+	case Down:
+		return "Down"
+	case Stop:
+		return "Stop"
 	default:
 		panic("This point is unreachable")
 	}

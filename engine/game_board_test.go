@@ -24,8 +24,10 @@ package engine
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
+	"log"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestEmptyMessage(t *testing.T) {
@@ -58,6 +60,7 @@ func TestGetSize(t *testing.T) {
 
 func TestGetAt(t *testing.T) {
 	board := NewGameBoard([]rune{'a', 'b', 'c'}, "aaa"+"bbb"+"ccc")
+	log.Fatal(board.String())
 	assert.Equal(t, 'c', board.GetAt(NewPoint(0, 0)))
 	assert.Equal(t, 'c', board.GetAt(NewPoint(1, 0)))
 	assert.Equal(t, 'c', board.GetAt(NewPoint(2, 0)))
