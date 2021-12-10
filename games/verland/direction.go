@@ -32,7 +32,7 @@ const (
 	up                   = direction.Up
 	down                 = direction.Down
 	stop                 = direction.Stop
-	cure  direction.Base = "CURE"
+	cure  direction.Base = "ACT"
 )
 
 func directions() (direction.Map, error) {
