@@ -24,9 +24,9 @@ package sample
 
 import (
 	"fmt"
-	"github.com/codenjoyme/codenjoy-go-client/engine"
-	"reflect"
 	"sort"
+
+	"github.com/codenjoyme/codenjoy-go-client/engine"
 )
 
 type board struct {
@@ -82,7 +82,7 @@ func appendIfMissing(slice []*engine.Point, points ...*engine.Point) []*engine.P
 	for _, p := range points {
 		existed := false
 		for _, ele := range slice {
-			if reflect.DeepEqual(ele, p) {
+			if ele == p {
 				existed = true
 				break
 			}

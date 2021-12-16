@@ -25,10 +25,9 @@ package direction
 import "errors"
 
 type Direction struct {
-	name  Base
-	value int
-	dx    int
-	dy    int
+	name Base
+	dx   int
+	dy   int
 }
 
 type Base string
@@ -59,17 +58,12 @@ func NewMap(directions ...Direction) (Map, error) {
 	return nil, errors.New("map doesn't contain all required basic directions: Left, Right, Up, Down, Stop")
 }
 
-func New(value, dx, dy int, name Base) Direction {
+func New(dx, dy int, name Base) Direction {
 	return Direction{
-		value: value,
-		dx:    dx,
-		dy:    dy,
-		name:  name,
+		dx:   dx,
+		dy:   dy,
+		name: name,
 	}
-}
-
-func (d Direction) Value() int {
-	return d.value
 }
 
 func (d Direction) ChangeX(x int) int {
